@@ -1,5 +1,5 @@
 package is1220.projectSimErgy.core;
 
-public class ProbabilityDistribution {
+public class KPI {
 
 }
