@@ -27,6 +27,7 @@ public class Patient {
 		this.surname = surname;
 		this.severity = severity;
 		this.totalCharges = 0;
+		this.state = state.waiting;
 	}
 	
 	public void changeState() {}
@@ -35,7 +36,9 @@ public class Patient {
 		history.put(e, t);
 	}
 	
-	public void setCharges() {}
+	public void updateCharges(HealthService service) {
+		this.totalCharges = totalCharges + service.getCost()*(1 - insurance.getDiscount());
+	}
 
 	public Time getArrivalTime() {
 		return arrivalTime;

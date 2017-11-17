@@ -8,6 +8,12 @@ public abstract class HealthService {
 	private ProbabilityDistribution distribution;
 	private double cost;
 	
+	/**
+	 * Instantiates a Health service object with given type, cost and probability distribution
+	 * @param type
+	 * @param cost 
+	 * @param distribution
+	 */
 	public HealthService(String type, double cost, ProbabilityDistribution distribution) {
 		this.type = type;
 		this.cost = cost;
@@ -17,6 +23,10 @@ public abstract class HealthService {
 	
 	public void addPatientToQueue(Patient p){
 		this.waitingQueue.add(p);
+	}
+	
+	public double getCost() {
+		return this.cost;
 	}
 
 	public String toString() {

@@ -6,7 +6,7 @@ public class Time {
 	private int minutes;
 	
 	/**
-	 * Constructs a Time object with given hours and minutes
+	 * Instantiates a Time object with given hours and minutes
 	 * @param hours
 	 * @param minutes
 	 */
