@@ -1,5 +1,7 @@
-package is1220.projectSimErgy.core;
+package core;
 
-public class ProbabilityDistribution {
+public interface ProbabilityDistribution {
+	
+	public int generateSample();
 
 }
