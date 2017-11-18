@@ -19,7 +19,7 @@ public enum SeverityLevel {
 	public String getLevel() {
 		return level;
 	}
-	public ProbabilityDistribution getF() {
+	public ProbabilityDistribution getDistribution() {
 		return distribution;
 	}
 	public void setLevel(String level) {
