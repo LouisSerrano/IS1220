@@ -1,23 +1,18 @@
 package is1220.projectSimErgy.core;
 
-public class HealthInsurance {
-	/**
-	 * accepted values : "silver", "gold"
-	 */
-	private String pricingPolicy;
-
-	/**
-	 * @return the pricingPolicy
-	 */
-	public String getPricingPolicy() {
-		return pricingPolicy;
-	}
-
-	/**
-	 * @param pricingPolicy the pricingPolicy to set
-	 */
-	public void setPricingPolicy(String pricingPolicy) {
-		this.pricingPolicy = pricingPolicy;
-	}
+public enum HealthInsurance {
 	
+	none(0.0),
+	silver(0.5),
+	gold(0.8);
+	
+	private double discount;
+
+	HealthInsurance(double discount){
+		this.discount = discount;
+	}
+
+	public double getDiscount() {
+		return this.discount;
+	}
 }

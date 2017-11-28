@@ -2,7 +2,11 @@ package is1220.projectSimErgy.core;
 
 public abstract class HumanResource {
 
+	/**
+	 * counts the total number of Human Resources working in the ED
+	 */
 	private static int counter;
+	
 	private int id;
 	private String surname;
 	private String name;

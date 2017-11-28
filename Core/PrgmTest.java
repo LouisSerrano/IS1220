@@ -12,5 +12,8 @@ public class PrgmTest {
 		System.out.println(p1);
 		System.out.println(HumanResource.getCounter());
 		
+		Consultation c = new Consultation(450, null);
+		System.out.println(c);
+		
 	}
 }

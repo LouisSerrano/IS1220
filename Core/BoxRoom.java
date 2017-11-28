@@ -4,7 +4,7 @@ public class BoxRoom extends Room {
 
 	public BoxRoom(String name, String type) {
 		super(name, "BoxRoom");
-		// TODO Auto-generated constructor stub
+
 	}
 
 	
