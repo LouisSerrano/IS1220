@@ -1,4 +1,4 @@
-package is1220.projectSimErgy.core;
+package core;
 
 public class Consultation extends HealthService {
 
@@ -6,5 +6,8 @@ public class Consultation extends HealthService {
 		super("Consultation", cost, distribution);
 	}
 	
+	public Consultation() {
+		super();
+	}
 
 }

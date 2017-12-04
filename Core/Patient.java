@@ -1,6 +1,9 @@
-package is1220.projectSimErgy.core;
+package core;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import event.*;
 
 public class Patient {
 	
@@ -17,18 +20,31 @@ public class Patient {
 	private State state;
 	private Room location;
 	private Map<Event, Time> history;
+	private Event currentEvent;
 	private Time arrivalTime;
 	private double totalCharges;
 	
-	public Patient(String name, String surname, SeverityLevel severity){
+	public Patient(String name, String surname, SeverityLevel severity, Time arrivalTime){
 		Patient.patientCounter++;
 		this.id = Patient.patientCounter;
 		this.name = name;
 		this.surname = surname;
 		this.severity = severity;
+		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = State.waiting;
+		this.setCurrentEvent(new Arrival());
+		this.history = new HashMap<Event, Time>();
 	}
+	
+	public Patient(SeverityLevel severity, Time arrivalTime){
+		Patient.patientCounter++;
+		this.id = Patient.patientCounter;
+		this.severity = severity;
+		this.arrivalTime = arrivalTime;
+		this.totalCharges = 0;
+		this.state = State.waiting;
+	}	
 	
 	public void changeState() {}
 	
@@ -76,4 +92,26 @@ public class Patient {
 		this.surname = surname;
 	}
 
+	public String toString() {
+		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname + ", Severity Level : "
+				 + severity + ", Insurance : " + insurance + ", STATE : " + state + ", LOCATION : " + 
+				location + ", TOTAL CHARGES : " + totalCharges + "]";
+	}
+
+	public Event getCurrentEvent() {
+		return currentEvent;
+	}
+
+	public void setCurrentEvent(Event currentEvent) {
+		this.currentEvent = currentEvent;
+	}
+	
+	public SeverityLevel getSeverityLevel() {
+		return this.severity;
+	}
+	
+	public State getState() {
+		return this.state;
+	}
 }
+

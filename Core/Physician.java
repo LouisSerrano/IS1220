@@ -1,9 +1,9 @@
-package is1220.projectSimErgy.core;
+package core;
 
 public class Physician extends HumanResource {
 
 	public Physician(String surname, String name) {
-		super(surname, name, "Physician");
+		super(surname, name, "PHYSICIAN");
 
 	}
 

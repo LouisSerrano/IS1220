@@ -1,9 +1,7 @@
 package core;
-
 import java.util.ArrayList;
 
-import event.EnabledEvent;
-import event.EventQueue;
+import event.*;
 
 public class EmergencyDepartment {
 	private String name;
@@ -45,25 +43,16 @@ public class EmergencyDepartment {
 		
 	}
 	
-	public Patient getNextPatient(PatientState state){
+	public Patient getNextPatient(State state){
 		ArrayList<Patient> list= new ArrayList<Patient>();
-		for (Patient patient : this.PatientList){
-			if (patient.getState().equals(state)){
-				list.add(patient);
+		Patient result = this.PatientList.get(0);
+		for(Patient patient : this.PatientList){
+			if (result.co)
+				
 			}
+			
 		}
 		
-		Patient result = list.get(0);
-		for(Patient patient : list){
-			if (result.getLevel().compare(patient.getLevel())>0){
-				result=patient;
-			}
-			if(result.getLevel().getPriority()==1){
-				break;
-			}	
-		}
-		return result;	
-	}
 	
 	
 	
@@ -158,10 +147,6 @@ public class EmergencyDepartment {
 	public void setNurseList(ArrayList<Nurse> nurseList) {
 		NurseList = nurseList;
 	}
-
-	
-	
-	
 	
 	
 }

@@ -1,4 +1,4 @@
-package is1220.projectSimErgy.core;
+package core;
 
 public class KPI {
 

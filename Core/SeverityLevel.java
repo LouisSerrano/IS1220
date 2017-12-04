@@ -1,12 +1,12 @@
-package is1220.projectSimErgy.core;
+package core;
 
 public enum SeverityLevel {
 	
-	L1("L1"),
-	L2("L2"),
-	L3("L3"),
-	L4("L4"),
-	L5("L5");
+	L1("1"),
+	L2("2"),
+	L3("3"),
+	L4("4"),
+	L5("5");
 	
 	private String level;
 	

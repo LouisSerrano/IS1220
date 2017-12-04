@@ -1,8 +1,5 @@
-/**
- * @author Tim
- */
 
-package is1220.projectSimErgy.core;
+package core;
 
 /**
  * 
