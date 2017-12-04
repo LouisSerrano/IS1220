@@ -42,7 +42,7 @@ public class Patient {
 		this.severity = severity;
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
-		this.state = State.waiting;
+		this.state = PatientState.WAITING_REGISTRATION;
 	}	
 	
 	public void changeState() {}
@@ -107,6 +107,10 @@ public class Patient {
 	
 	public SeverityLevel getSeverityLevel() {
 		return this.severity;
+	}
+	
+	public void setPatientState(PatientState state) {
+		this.state = state;
 	}
 	
 	public PatientState getPatientState() {
