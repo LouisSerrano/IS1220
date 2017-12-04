@@ -1,6 +1,8 @@
 package core;
 import java.util.ArrayList;
 
+import core.distribution.ProbabilityDistribution;
+
 public abstract class HealthService {
 	
 	private String type;
@@ -26,7 +28,7 @@ public abstract class HealthService {
 	}
 	
 	/**
-	 * adds the Patient p to the waiting queue of the Health Service
+	 * places the Patient in the waiting queue according to its Severity Level
 	 * @param p Patient
 	 */
 	public void addPatientToQueue(Patient p){
