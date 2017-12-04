@@ -17,7 +17,7 @@ public class Patient {
 	private String surname;
 	private SeverityLevel severity;
 	private HealthInsurance insurance;
-	private State state;
+	private PatientState state;
 	private Room location;
 	private Map<Event, Time> history;
 	private Event currentEvent;
@@ -32,8 +32,7 @@ public class Patient {
 		this.severity = severity;
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
-		this.state = State.waiting;
-		this.setCurrentEvent(new Arrival());
+		this.state = PatientState.WAITING_REGISTRATION;
 		this.history = new HashMap<Event, Time>();
 	}
 	
@@ -110,7 +109,7 @@ public class Patient {
 		return this.severity;
 	}
 	
-	public State getState() {
+	public PatientState getPatientState() {
 		return this.state;
 	}
 }

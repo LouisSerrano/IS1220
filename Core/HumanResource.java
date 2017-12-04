@@ -11,7 +11,7 @@ public abstract class HumanResource {
 	private String surname;
 	private String name;
 	private String type;
-	private String state;
+	private HumanResourceState state;
 	
 	public HumanResource(String surname, String name, String type) {
 		HumanResource.counter++;
@@ -19,6 +19,7 @@ public abstract class HumanResource {
 		this.setSurname(surname);
 		this.setName(name);
 		this.type = type;
+		this.state = HumanResourceState.IDLE;
 	}
 
 	public String getSurname() {
@@ -39,6 +40,10 @@ public abstract class HumanResource {
 	
 	public static int getCounter() {
 		return HumanResource.counter;
+	}
+	
+	public HumanResourceState getHumanResourceState() {
+		return this.state;
 	}
 	
 	public String toString() {
