@@ -1,9 +1,10 @@
-package core;
+package Core;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import event.*;
+import Core.Distribution.ConsultationReqProbability;
+import Event.Event;
 
 public class Patient {
 	
@@ -18,13 +19,15 @@ public class Patient {
 	private SeverityLevel severity;
 	private HealthInsurance insurance;
 	private PatientState state;
-	private Room location;
-	private Map<Event, Time> history;
+	private Room room;
+	private ConsultationReqProbability decisionFunction;
+	private String direction;
+	private Map<Event, Integer> history;
 	private Event currentEvent;
-	private Time arrivalTime;
+	private int arrivalTime;
 	private double totalCharges;
 	
-	public Patient(String name, String surname, SeverityLevel severity, Time arrivalTime){
+	public Patient(String name, String surname, SeverityLevel severity, int arrivalTime){
 		Patient.patientCounter++;
 		this.id = Patient.patientCounter;
 		this.name = name;
@@ -33,10 +36,11 @@ public class Patient {
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = PatientState.WAITING_REGISTRATION;
-		this.history = new HashMap<Event, Time>();
+		this.setDecisionFunction(new ConsultationReqProbability());
+		this.history = new HashMap<Event, Integer>();
 	}
 	
-	public Patient(SeverityLevel severity, Time arrivalTime){
+	public Patient(SeverityLevel severity, int arrivalTime){
 		Patient.patientCounter++;
 		this.id = Patient.patientCounter;
 		this.severity = severity;
@@ -45,9 +49,8 @@ public class Patient {
 		this.state = PatientState.WAITING_REGISTRATION;
 	}	
 	
-	public void changeState() {}
 	
-	public void updateHistory(Event e, Time t) {
+	public void updateHistory(Event e, Integer t) {
 		history.put(e, t);
 	}
 	
@@ -55,11 +58,11 @@ public class Patient {
 		this.totalCharges = totalCharges + service.getCost()*(1 - insurance.getDiscount());
 	}
 
-	public Time getArrivalTime() {
+	public int getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(Time arrivalTime) {
+	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
@@ -94,7 +97,15 @@ public class Patient {
 	public String toString() {
 		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname + ", Severity Level : "
 				 + severity + ", Insurance : " + insurance + ", STATE : " + state + ", LOCATION : " + 
-				location + ", TOTAL CHARGES : " + totalCharges + "]";
+				room + ", TOTAL CHARGES : " + totalCharges + "]";
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public Event getCurrentEvent() {
@@ -116,5 +127,26 @@ public class Patient {
 	public PatientState getPatientState() {
 		return this.state;
 	}
-}
 
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+	public Map<Event, Integer> getHistory() {
+		return history;
+	}
+	public void setHistory(Map<Event, Integer> history) {
+		this.history = history;
+	}
+
+	public ConsultationReqProbability getDecisionFunction() {
+		return decisionFunction;
+	}
+
+	public void setDecisionFunction(ConsultationReqProbability decisionFunction) {
+		this.decisionFunction = decisionFunction;
+	}
+}
