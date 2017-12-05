@@ -1,10 +1,9 @@
-package core;
+package Core;
 
 public class Physician extends HumanResource {
 
 	public Physician(String surname, String name) {
 		super(surname, name, "PHYSICIAN");
-
-	}
+			}
 
 }
