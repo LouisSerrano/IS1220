@@ -1,10 +1,10 @@
-package core;
+package Core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PatientCreator {
-	public HashMap<SeverityLevel,ArrayList<Integer>> PatientList;
+	public HashMap<SeverityLevel,Patient> lastPatient;
 	
 	/**
 	 * Instantiates and initialises a new Hashmap for PatientList. Calls 5 patients with a
@@ -16,22 +16,23 @@ public class PatientCreator {
 	
 	
 	public PatientCreator(){
-		this.PatientList= new HashMap<SeverityLevel,ArrayList<Integer>>();
+		this.lastPatient= new HashMap<SeverityLevel,Patient>();
 		
 		for( SeverityLevel lvl : SeverityLevel.values() ){
-			ArrayList<Integer> list = new ArrayList<Integer>();
-			list.add(lvl.distribution.generateSample());
-			PatientList.put(lvl, list);
+			int time = lvl.getDistribution().generateSample();
+			Patient patient= new Patient (lvl, time);
+			lastPatient.put(lvl,patient);
 		}
 		
 	}
 	
-	public void addPatient(SeverityLevel level){
-		ArrayList<Integer> list = PatientList.get(level);
-		int lastTime = list.get(list.size()-1);
-		list.add(lastTime+level.distribution.generateSample());
-		PatientList.put(level, list);
+	public Patient newPatient(SeverityLevel level){
+		int lastTime = lastPatient.get(level).getArrivalTime();
+		int time= level.getDistribution().generateSample();
+		Patient patient =new Patient(level, lastTime+time);
+		lastPatient.put(level,patient);
 		
+		return patient;
 	}
 	
 	
