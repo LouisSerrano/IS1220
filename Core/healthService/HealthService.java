@@ -1,8 +1,8 @@
-package Core;
+package core.healthService;
 
 import java.util.ArrayList;
 
-import Core.Distribution.ProbabilityDistribution;
+import core.distribution.ProbabilityDistribution;
 
 public abstract class HealthService {
 	
