@@ -1,4 +1,4 @@
-package event;
+package Event;
 
 public class PatientEndExaminationEvent {
 	

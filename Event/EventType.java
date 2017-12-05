@@ -1,12 +1,12 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.Nurse;
-import core.Patient;
-import core.Room;
-import core.Physician;
-import core.SeverityLevel;
-import core.Transporter;
+import Core.EmergencyDepartment;
+import Core.Nurse;
+import Core.Patient;
+import Core.Room;
+import Core.Physician;
+import Core.SeverityLevel;
+import Core.Transporter;
 
 public enum EventType {
 	ARR1("PatientArrival1"),
@@ -74,16 +74,15 @@ public enum EventType {
 		boolean availablePhysician=false;
 		boolean availableTransporter=false;
 		
-		if (this.name.equals("RegistrationEvent")){
 		
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_REGISTRATION")){
-					waitingPatient=true;
-					break;
-				}
+		
+		if (this.name.equals("RegistrationEvent")){
+			if(!system.getRegistration().getWaitingQueue().isEmpty()){
+				waitingPatient=true;
 			}
+			
 			for (Nurse nurse:system.getNurseList()){
-				if (nurse.getState().equals("IDLE")){
+				if (nurse.getHumanResourceState().equals("IDLE")){
 					availableNurse=true;
 					break;	
 				}
@@ -99,8 +98,8 @@ public enum EventType {
 			
 			while (i<n && (waitingHighPriorityPatient==false ||  waitingLowPriorityPatient==false)){
 				Patient patient=system.getPatientList().get(i);
-				if (patient.getState().equals("WAITING_INSTALLATION")){
-					if(patient.getLevel()==SeverityLevel.L1 || patient.getLevel()==SeverityLevel.L2 ){
+				if (patient.getPatientState().equals("WAITING_INSTALLATION")){
+					if(patient.getSeverityLevel()==SeverityLevel.L1 || patient.getSeverityLevel()==SeverityLevel.L2 ){
 						waitingHighPriorityPatient=true;
 					}
 					else{
@@ -110,17 +109,18 @@ public enum EventType {
 		    }
 				
 			for (Nurse nurse:system.getNurseList()){
-				if (nurse.getState().equals("IDLE")){
+				if (nurse.getHumanResourceState().equals("IDLE")){
 					availableNurse=true;
 					break;	
 						}
 			}
+			
 			while (p<n && (availableShockRoom==false ||  availableBoxRoom==false)){
 				Room room = system.getRoomList().get(p);
-				if (room.getType().equals("SOCKROOM")&&room.getState().equals("AVAILABLE")){
+				if (room.getType().equals("SOCKROOM")&&room.getRoomState().equals("AVAILABLE")){
 					availableShockRoom=true;
 				}
-				if (room.getType().equals("BOXROOM")&&room.getState().equals("AVAILABLE")){
+				if (room.getType().equals("BOXROOM")&&room.getRoomState().equals("AVAILABLE")){
 					availableBoxRoom=true;
 					}
 				p+=1;
@@ -129,15 +129,14 @@ public enum EventType {
 			}
 		
 			
+		
+		
 		if (this.name.equals("PatientStartConsultationEvent")){
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_CONSULTATION")){
-					waitingPatient=true;
-					break;
-				}
+			if(!system.getConsultation().getWaitingQueue().isEmpty()){
+				waitingPatient=true;
 			}
 			for (Physician physician : system.getPhysicianList()){
-				if (physician.getState().equals("IDLE")){
+				if (physician.getHumanResourceState().equals("IDLE")){
 					availablePhysician=true;
 					break;
 				}
@@ -145,32 +144,38 @@ public enum EventType {
 			this.available=(waitingPatient && availablePhysician);
 			}
 		
+		
+		
 			
+		
 		if (this.name.equals("PatientStartTransportationEvent")){
-			
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_TRANSPORTATION")){
-					waitingPatient=true;
-					break;
-				}
+			if(!system.getRegistration().getWaitingQueue().isEmpty()){
+				waitingPatient=true;
 			}
+			
 			for (Transporter transporter: system.getTranspoterList()){
-				if (transporter.getState().equals("IDLE")){
+				if (transporter.getHumanResourceState().equals("IDLE")){
 					availableTransporter=true;
 					break;
 				}
 			}
 			this.available=(waitingPatient && availableTransporter);
 			}
+		
+		
+		
 		if (this.name.equals("PatientStartXrayEvent")){
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_XRAY")){
-					waitingPatient=true;
-					break;
+			if(!system.getExamination().getWaitingQueue().isEmpty()){
+				for (Patient patient : system.getRegistration().getWaitingQueue()){
+					if(patient.getPatientState().equals("WAITING_BLOOD")){
+						waitingPatient=true;
+						break;
+					}
 				}
 			}
+			
 			for (Room room : system.getRoomList()){
-				if (room.getType().equals("XRAY")&& room.getState().equals("IDLE")){
+				if (room.getType().equals("XRAY")&& room.getRoomState().equals("IDLE")){
 					availableXrayRoom=true;
 					break;
 				}
@@ -178,15 +183,20 @@ public enum EventType {
 			this.available= waitingPatient && availableXrayRoom;	
 		}
 		
+		
+		
 		if (this.name.equals("PatientStartBloodEvent")){
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_BLOOD")){
-					waitingPatient=true;
-					break;
+			if(!system.getExamination().getWaitingQueue().isEmpty()){
+				for (Patient patient : system.getRegistration().getWaitingQueue()){
+					if(patient.getPatientState().equals("WAITING_BLOOD")){
+						waitingPatient=true;
+						break;
+					}
 				}
 			}
+			
 			for (Room room : system.getRoomList()){
-				if (room.getType().equals("BLOOD")&& room.getState().equals("IDLE")){
+				if (room.getType().equals("BLOOD")&& room.getRoomState().equals("IDLE")){
 					availableBloodRoom=true;
 					break;
 				}
@@ -194,15 +204,20 @@ public enum EventType {
 			this.available= waitingPatient && availableBloodRoom;	
 		}
 		
+		
+		
 		if (this.name.equals("PatientStartMriEvent")){
-			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("WAITING_MRI")){
-					waitingPatient=true;
-					break;
+			if(!system.getExamination().getWaitingQueue().isEmpty()){
+				for (Patient patient : system.getRegistration().getWaitingQueue()){
+					if(patient.getPatientState().equals("WAITING_MRI")){
+						waitingPatient=true;
+						break;
+					}
 				}
 			}
+			
 			for (Room room : system.getRoomList()){
-				if (room.getType().equals("MRI")&& room.getState().equals("IDLE")){
+				if (room.getType().equals("MRI")&& room.getRoomState().equals("IDLE")){
 					availableMriRoom=true;
 					break;
 				}
@@ -210,9 +225,12 @@ public enum EventType {
 			this.available= waitingPatient && availableMriRoom;	
 		}
 		
+		
+		
+		
 		if (this.name.equals("PatientEndInstallationEvent")){
 			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("BEING_INSTALLED")){
+				if (patient.getPatientState().equals("BEING_INSTALLED")){
 					waitingPatient=true;
 					break;
 				}
@@ -222,7 +240,7 @@ public enum EventType {
 			
 		if (this.name.equals("PatientEndConsultationEvent")){
 			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("BEING_CONSULTED")){
+				if (patient.getPatientState().equals("BEING_CONSULTED")){
 					waitingPatient=true;
 					break;
 					}
@@ -232,7 +250,7 @@ public enum EventType {
 			
 		if (this.name.equals("PatientEndTransportationEvent")){
 			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("BEING_TRANSPORTED")){
+				if (patient.getPatientState().equals("BEING_TRANSPORTED")){
 					waitingPatient=true;
 					break;
 					}
@@ -241,7 +259,7 @@ public enum EventType {
 			}
 		if (this.name.equals("PatientEndExaminationEvent")){
 			for (Patient patient : system.getPatientList()){
-				if (patient.getState().equals("BEING_EXAMINATED")){
+				if (patient.getPatientState().equals("BEING_EXAMINATED")){
 					waitingPatient=true;
 					break;
 					}

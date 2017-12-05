@@ -1,4 +1,4 @@
-package event;
+package Event;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,12 @@ public class EventQueue {
 		this.nextEvents=new ArrayList<Event>();
 	}
 	
-	public EventQueue(EnabledEvent events, EmergencyDepartment system){
+	public EventQueue(EnabledEvent events, Core.EmergencyDepartment system){
 		nextEvents= new ArrayList<Event>();
 		for (EventType eT : events.getAbledList()){
 			if (eT.name.equals("RegistrationEvent")){
 				this.nextEvents.add(new PatientRegistrationEvent(
-						Registration.waitingQueue.pop(), system.getSimTme()));
+						system.getRegistration().getWaitingQueue().get(0), system.getSimTme()));
 				
 			}
 			if (eT.name.equals("PatientStartInstallationEvent")){
