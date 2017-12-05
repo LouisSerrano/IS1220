@@ -47,7 +47,7 @@ public class Blood extends HealthService {
 	 * To get the unique instance of Blood
 	 * @return
 	 */
-	public Blood getInstance() {
+	public static Blood getBloodInstance() {
 		return INSTANCE;
 	}
 	

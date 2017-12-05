@@ -37,7 +37,7 @@ public class Installation extends HealthService {
 	 * To get the unique instance of Installation
 	 * @return
 	 */
-	public Installation getInstance() {
+	public static Installation getInstallationInstance() {
 		return INSTANCE;
 	}
 	

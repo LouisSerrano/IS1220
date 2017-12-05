@@ -37,7 +37,7 @@ public class Registration extends HealthService {
 	 * To get the unique instance of Registration
 	 * @return
 	 */
-	public Registration getInstance() {
+	public static Registration getRegistrationInstance() {
 		return INSTANCE;
 	}
 	

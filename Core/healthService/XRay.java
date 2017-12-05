@@ -47,7 +47,7 @@ public class XRay extends HealthService {
 	 * To get the unique instance of XRay
 	 * @return
 	 */
-	public XRay getInstance() {
+	public static XRay getXRayInstance() {
 		return INSTANCE;
 	}
 	

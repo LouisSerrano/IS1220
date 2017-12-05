@@ -37,7 +37,7 @@ public class Transportation extends HealthService {
 	 * To get the unique instance of Transportation
 	 * @return
 	 */
-	public Transportation getInstance() {
+	public static Transportation getTransportationInstance() {
 		return INSTANCE;
 	}
 	

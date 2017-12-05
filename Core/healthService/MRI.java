@@ -47,7 +47,7 @@ public class MRI extends HealthService {
 	 * To get the unique instance of MRI
 	 * @return
 	 */
-	public MRI getInstance() {
+	public static MRI getMRIInstance() {
 		return INSTANCE;
 	}
 	
