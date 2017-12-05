@@ -1,7 +1,7 @@
-package core;
+package Core;
 import java.util.ArrayList;
 
-import event.*;
+import Event.*;
 
 public class EmergencyDepartment {
 	private String name;
@@ -10,15 +10,93 @@ public class EmergencyDepartment {
 	private ArrayList<Physician> PhysicianList;
 	private ArrayList<Nurse> NurseList;
 	private ArrayList<Room> RoomList;
-	private ArrayList<Transporter> TranspoterList;
+	private ArrayList<Transporter> TransporterList;
 	private EnabledEvent EnabledEvent;
 	private EventQueue eventqueue;
+	private Registration registration;
+	private Installation installation;
+	private Consultation consultation;
+	private Transportation transportation;
+	private MRI mri ;
+	private XRAY xray;
+	private Blood blood;
 	
+	
+	public Registration getRegistration() {
+		return registration;
+	}
+
+
+	public Installation getInstallation() {
+		return installation;
+	}
+
+
+	public Consultation getConsultation() {
+		return consultation;
+	}
+
+
+	public Transportation getTransportation() {
+		return transportation;
+	}
+
+
+	public MRI getMri() {
+		return mri;
+	}
+
+
+	public XRAY getXray() {
+		return xray;
+	}
+
+
+	public Blood getBlood() {
+		return blood;
+	}
+
+
+	public void setMri(MRI mri) {
+		this.mri = mri;
+	}
+
+
+	public void setXray(XRAY xRay) {
+		this.xray = xRay;
+	}
+
+
+	public void setBlood(Blood blood) {
+		this.blood = blood;
+	}
+
+
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+	}
+
+
+	public void setInstallation(Installation installation) {
+		this.installation = installation;
+	}
+
+
+	public void setConsultation(Consultation consultation) {
+		this.consultation = consultation;
+	}
+
+
+	public void setTransportation(Transportation transportation) {
+		this.transportation = transportation;
+	}
+
+
 	public EmergencyDepartment(){
 		this.name="ED";
 		this.simTme=0;
 		this.PatientList=new ArrayList<Patient>();
-		this.TranspoterList=new ArrayList<Transporter>();
+		this.TransporterList=new ArrayList<Transporter>();
 		this.PhysicianList= new ArrayList<Physician>();
 		this.NurseList= new ArrayList<Nurse>();
 		this.RoomList=new ArrayList<Room>();
@@ -28,37 +106,52 @@ public class EmergencyDepartment {
 	
 	
 	public Nurse getFreeNurse(){
+		Nurse result = null;
+		for(Nurse nurse: this.NurseList){
+			if (nurse.getHumanResourceState().equals("IDLE")){
+				result= nurse;
+				break;
+			}
+		}
+		return result;
 		
 	}
 	
 	public Physician getFreePhysician(){
-		
+		Physician result = null;
+		for(Physician physician: this.PhysicianList){
+			if (physician.getHumanResourceState().equals("IDLE")){
+				result = physician;
+				break;
+				}
+		}
+		return result;
 	}
 	
 	public Room getFreeRoom(){
+		Room result = null;
+
+		for( Room room : this.RoomList){
+			if (room.getRoomState().equals("ILDE")){
+				result= room;
+				break;
+			}
+		}
+		return result;
 		
 	}
 	
 	public Transporter getFreeTransporter(){
+		Transporter result = null;
+		for(Transporter transporter: this.TransporterList){
+			if (transporter.getHumanResourceState().equals("IDLE")){
+				result = transporter;
+				break;
+				}
+		}
+		return result;
 		
 	}
-	
-	public Patient getNextPatient(State state){
-		ArrayList<Patient> list= new ArrayList<Patient>();
-		Patient result = this.PatientList.get(0);
-		for(Patient patient : this.PatientList){
-			if (result.co)
-				
-			}
-			
-		}
-		
-	
-	
-	
-	
-	
-	
 	
 	
 
@@ -72,11 +165,11 @@ public class EmergencyDepartment {
 
 
 	public ArrayList<Transporter> getTranspoterList() {
-		return TranspoterList;
+		return TransporterList;
 	}
 
-	public void setTranspoterList(ArrayList<Transporter> transpoterList) {
-		TranspoterList = transpoterList;
+	public void setTranspoterList(ArrayList<Transporter> transporterList) {
+		TransporterList = transporterList;
 	}
 
 	public ArrayList<Room> getRoomList() {
