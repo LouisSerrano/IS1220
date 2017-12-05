@@ -1,12 +1,12 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.Nurse;
-import core.Patient;
-import core.Room;
-import core.Physician;
-import core.SeverityLevel;
-import core.Transporter;
+import Core.EmergencyDepartment;
+import Core.Nurse;
+import Core.Patient;
+import Core.Room;
+import Core.Physician;
+import Core.SeverityLevel;
+import Core.Transporter;
 
 public enum EventType {
 	ARR1("PatientArrival1"),
@@ -165,14 +165,10 @@ public enum EventType {
 		
 		
 		if (this.name.equals("PatientStartXrayEvent")){
-			if(!system.getExamination().getWaitingQueue().isEmpty()){
-				for (Patient patient : system.getRegistration().getWaitingQueue()){
-					if(patient.getPatientState().equals("WAITING_BLOOD")){
-						waitingPatient=true;
-						break;
-					}
+			if(!system.getXray().getWaitingQueue().isEmpty()){
+				waitingPatient=true;
 				}
-			}
+			
 			
 			for (Room room : system.getRoomList()){
 				if (room.getType().equals("XRAY")&& room.getRoomState().equals("IDLE")){
@@ -186,13 +182,9 @@ public enum EventType {
 		
 		
 		if (this.name.equals("PatientStartBloodEvent")){
-			if(!system.getExamination().getWaitingQueue().isEmpty()){
-				for (Patient patient : system.getRegistration().getWaitingQueue()){
-					if(patient.getPatientState().equals("WAITING_BLOOD")){
-						waitingPatient=true;
-						break;
-					}
-				}
+			if(!system.getBlood().getWaitingQueue().isEmpty()){
+				waitingPatient = true;
+				
 			}
 			
 			for (Room room : system.getRoomList()){
@@ -207,13 +199,9 @@ public enum EventType {
 		
 		
 		if (this.name.equals("PatientStartMriEvent")){
-			if(!system.getExamination().getWaitingQueue().isEmpty()){
-				for (Patient patient : system.getRegistration().getWaitingQueue()){
-					if(patient.getPatientState().equals("WAITING_MRI")){
-						waitingPatient=true;
-						break;
-					}
-				}
+			if(!system.getMri().getWaitingQueue().isEmpty()){
+				waitingPatient=true;
+				
 			}
 			
 			for (Room room : system.getRoomList()){
@@ -273,6 +261,7 @@ public enum EventType {
 
 
 
+	
 	public String getName() {
 		return name;
 	}

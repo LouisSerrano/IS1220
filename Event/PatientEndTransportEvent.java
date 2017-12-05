@@ -1,10 +1,10 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.HumanResourceState;
-import core.Patient;
-import core.PatientState;
-import core.Transporter;
+import Core.EmergencyDepartment;
+import Core.HumanResourceState;
+import Core.Patient;
+import Core.PatientState;
+import Core.Transporter;
 
 public class PatientEndTransportEvent extends Event{
 	
@@ -12,7 +12,7 @@ public class PatientEndTransportEvent extends Event{
 	private Transporter transporter;
 	
 	public PatientEndTransportEvent(int timeStamp, Patient patient, Transporter transporter){
-		super(EventType.START_TRANSPORT,timeStamp);
+		super(EventType.END_TRANSPORT,timeStamp);
 		this.patient=patient;
 		this.transporter= transporter;
 		}
@@ -38,6 +38,13 @@ public class PatientEndTransportEvent extends Event{
 			system.getMri().addPatientToQueue(patient);
 			patient.setDirection(null);
 			break;
+			
+		case"CONSULTATION":
+			patient.setPatientState(PatientState.WAITING_CONSULTATION);
+			system.getConsultation().addPatientToQueue(patient);
+			patient.setDirection(null);
+			break;
+			
 		
 	}
 	

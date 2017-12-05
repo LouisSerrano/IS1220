@@ -1,12 +1,12 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.HumanResourceState;
-import core.Nurse;
-import core.Patient;
-import core.PatientState;
-import core.Room;
-import core.RoomState;
+import Core.EmergencyDepartment;
+import Core.HumanResourceState;
+import Core.Nurse;
+import Core.Patient;
+import Core.PatientState;
+import Core.Room;
+import Core.RoomState;
 
 public class PatientStartInstallationEvent extends Event {
 	private Patient patient;

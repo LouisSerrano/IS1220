@@ -1,8 +1,8 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
+import Core.EmergencyDepartment;
 
-public abstract class Event implements Comparable<Event>{
+public abstract class Event{
 	private EventType name;
 	private int timeStamp;
 	
@@ -12,7 +12,9 @@ public Event(EventType name, int timeStamp){
 }
 
 
-public abstract void execute(EmergencyDepartment system);
+public void execute(EmergencyDepartment system){
+	system.setSimTme(this.timeStamp);
+}
 
 
 public EventType getName() {

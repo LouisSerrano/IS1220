@@ -1,18 +1,19 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.healthService.HealthService;
-import core.HumanResourceState;
-import core.Patient;
-import core.PatientState;
-import core.Physician;
-import core.Room;
-import core.distribution.ConsultationReqProbability;
+import Core.EmergencyDepartment;
+import Core.HealthService;
+import Core.HumanResourceState;
+import Core.Patient;
+import Core.PatientState;
+import Core.Physician;
+import Core.Room;
+import Core.Distribution.ConsultationReqProbability;
 
 public class PatientEndConsultationEvent extends Event {
 	
 	private Patient patient;
 	private Physician physician;
+	private String decision;
 	
 	public PatientEndConsultationEvent(int timeStamp, Patient patient,Physician physician, Room room){
 		super(EventType.END_VISIT,timeStamp);
@@ -21,24 +22,32 @@ public class PatientEndConsultationEvent extends Event {
 		}
 
 	public void execute(EmergencyDepartment system){
-		String decision = ConsultationReqProbability.getRequest();
+		this.decision = this.patient.getDecisionFunction().getRequest();
+		
 		
 		switch(decision){
 		case "NO_TEST_REQUIRED":
 			patient.setPatientState(PatientState.WAITING_RELEASE);
 			break;
+			
 		case "X_RAY":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);	
 			patient.setDirection(decision);
+			this.patient.getDecisionFunction().setXrayTaken(true);
 			break;
+			
 		case "BLOOD_TEST":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
 			patient.setDirection(decision);
+			this.patient.getDecisionFunction().setBloodTestTaken(true);
+			
 
 			break;
 		case "MRI":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
 			patient.setDirection(decision);
+			this.patient.getDecisionFunction().setMriTaken(true);
+
 
 			break;
 		}

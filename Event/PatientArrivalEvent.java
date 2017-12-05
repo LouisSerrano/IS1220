@@ -1,15 +1,15 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.Patient;
-import core.PatientState;
+import Core.EmergencyDepartment;
+import Core.Patient;
+import Core.PatientState;
 
 public class PatientArrivalEvent extends Event {
 	Patient patient;
 	
 	
-	public PatientArrivalEvent(String name, Patient patient){
-		super(EventType.ARR1,patient.getArrivalTime());
+	public PatientArrivalEvent(EventType name,int timeStamp,Patient patient){
+		super(name,patient.getArrivalTime());
 		this.patient=patient;
 		}
 

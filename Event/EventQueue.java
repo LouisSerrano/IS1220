@@ -1,11 +1,7 @@
-package event;
-
+package Event;
 import java.util.ArrayList;
 
-import core.EmergencyDepartment;
-import core.PatientState;
-import core.distribution.Uniform;
-
+import Core.EmergencyDepartment;
 public class EventQueue {
 	private ArrayList<Event> nextEvents;
 	
@@ -13,28 +9,28 @@ public class EventQueue {
 		this.nextEvents=new ArrayList<Event>();
 	}
 	
-	public EventQueue(EnabledEvent events, Core.EmergencyDepartment system){
+	public EventQueue(EnabledEvent events, EmergencyDepartment system){
 		nextEvents= new ArrayList<Event>();
 		for (EventType eT : events.getAbledList()){
 			if (eT.name.equals("RegistrationEvent")){
 				this.nextEvents.add(new PatientRegistrationEvent(
-						system.getRegistration().getWaitingQueue().get(0), system.getSimTme()));
+						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse()));
 				
 			}
 			if (eT.name.equals("PatientStartInstallationEvent")){
 				this.nextEvents.add(new PatientStartInstallationEvent(
-						Installation.waitingQueue.pop(), system.getSimTme()));
-				
+						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse(), system.getFreeRoom()));
 			}
 			if (eT.name.equals("PatientStartConsultationEvent")){
-				this.nextEvents.add(new PatientStartConsultationEvent(
-						Consultation.waitingQueue.pop(), system.getSimTme()));
 				
+				this.nextEvents.add(new PatientStartConsultationEvent(
+						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreePhysician()));
 				
 			}
+			
 			if (eT.name.equals("PatientStartTransportationEvent")){
-				this.nextEvents.add(new PatientStartTransportationEvent(
-						Transportation.waitingQueue.pop(), system.getSimTme()));
+				this.nextEvents.add(new PatientStartTransportEvent(
+						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeTransporter()));
 				
 			}
 			if (eT.name.equals("PatientStartXrayEvent")){
@@ -106,7 +102,17 @@ public class EventQueue {
 			nextEvents.set(i+1, e);
 			
 		}
-
+		
+	Event addInstanceOfEventType(EventType eT, EmergencyDepartment system){
+		
+		if (eT.name.equals("RegistrationEvent")){
+			this.nextEvents.add(new PatientRegistrationEvent(
+					system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse()));
+			
+		}
 	}
+	}
+		
+	
 
-}
+

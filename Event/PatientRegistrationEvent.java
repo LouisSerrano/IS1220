@@ -1,16 +1,16 @@
-package event;
+package Event;
 
-import core.EmergencyDepartment;
-import core.Nurse;
-import core.Patient;
-import core.PatientState;
+import Core.EmergencyDepartment;
+import Core.Nurse;
+import Core.Patient;
+import Core.PatientState;
 
 public class PatientRegistrationEvent extends Event {
 	private Patient patient;
 	private Nurse nurse;
 	
 	
-	public PatientRegistrationEvent(Nurse nurse, Patient patient, int timeStamp){
+	public PatientRegistrationEvent(int timeStamp,Patient patient, Nurse nurse){
 		super(EventType.REGIST, timeStamp);
 		this.patient= patient;
 		this.nurse=nurse;
