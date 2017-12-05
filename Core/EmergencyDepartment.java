@@ -1,8 +1,7 @@
-package core;
+package Core;
 import java.util.ArrayList;
 
-import event.*;
-import core.room.*;
+import Event.*;
 
 public class EmergencyDepartment {
 	private String name;
@@ -12,6 +11,13 @@ public class EmergencyDepartment {
 	private ArrayList<Nurse> NurseList;
 	private ArrayList<Room> RoomList;
 	private ArrayList<Transporter> TransporterList;
+	private Xray xray=Xray.getXRayInstance();
+	private Blood blood=Blood .getBloodInstance();
+	private MRI mri = MRI.getMRIInstance();
+	private Registration registration = Registration.getRegistrationInstance();
+	private Consultation consultation = Consultation.getConsultationInstance();
+	private Transportation transportation = Transportation.getTransportationInstance();
+	private Installation installation = Installation.getInstallationInstance();
 	private EnabledEvent EnabledEvent;
 	private EventQueue eventqueue;
 	
@@ -144,133 +150,178 @@ public class EmergencyDepartment {
 		return INSTANCE;
 	}
 	
-	/*
+	
 	public Nurse getFreeNurse(){
+		Nurse result = null;
+		for(Nurse nurse : this.NurseList){
+			if(nurse.getHumanResourceState().equals(HumanResourceState.IDLE)){
+				result = nurse;
+				break;
+			}		
+		}
+		return result;
 		
 	}
 	
 	public Physician getFreePhysician(){
+		Physician result = null;
+		for(Physician physician : this.PhysicianList){
+			if(physician.getHumanResourceState().equals(HumanResourceState.IDLE)){
+				result = physician;
+				break;
+			}		
+		}
+		return result;
 		
 	}
 	
 	public Room getFreeRoom(){
+		Room result = null;
+		for(Room room : this.RoomList){
+			if(room.getRoomState().equals(RoomState.AVAILABLE){
+				result = room;
+				break;
+			}		
+		}
+		return result;
 		
 	}
 	
 	public Transporter getFreeTransporter(){
+		Transporter result = null;
+		for(Transporter transporter : this.TransporterList){
+			if(transporter.getHumanResourceState().equals(HumanResourceState.IDLE)){
+				result = transporter;
+				break;
+			}		
+		}
+		return result;
 		
 	}
 	
-	public Patient getNextPatient(State state){
-		ArrayList<Patient> list= new ArrayList<Patient>();
-		Patient result = this.PatientList.get(0);
-		for(Patient patient : this.PatientList){
-			if (result.co)
-				
-			}
-			
-		}
-		
-	
-	
-	
-	
-	
-	
-	
-	
-
 	public EventQueue getEventqueue() {
 		return eventqueue;
 	}
-
 	public void setEventqueue(EventQueue eventqueue) {
 		this.eventqueue = eventqueue;
 	}
-
-
 	public ArrayList<Transporter> getTranspoterList() {
-		return TranspoterList;
+		return TransporterList;
 	}
-
 	public void setTranspoterList(ArrayList<Transporter> transpoterList) {
-		TranspoterList = transpoterList;
+		TransporterList = transpoterList;
 	}
-
 	public ArrayList<Room> getRoomList() {
 		return RoomList;
 	}
-
 	public void setRoomList(ArrayList<Room> roomList) {
 		RoomList = roomList;
 	}
-
 	private EventQueue NextEvents;
 	public EventQueue getNextEvents() {
 		return NextEvents;
 	}
-
 	public void setNextEvents(EventQueue nextEvents) {
 		NextEvents = nextEvents;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
 	public int getSimTme() {
 		return simTme;
 	}
-
 	public ArrayList<Patient> getPatientList() {
 		return PatientList;
 	}
-
 	public ArrayList<Physician> getPhysicianList() {
 		return PhysicianList;
 	}
-
 	public ArrayList<Nurse> getNurseList() {
 		return NurseList;
 	}
-
-
 	public EnabledEvent getEnabledEventList() {
 		return EnabledEvent;
 	}
-
-
 	public void setEnabledEventList(EnabledEvent enabledEventList) {
 		EnabledEvent = enabledEventList;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public void setSimTme(int simTme) {
 		this.simTme = simTme;
 	}
-
 	public void setPatientList(ArrayList<Patient> patientList) {
 		PatientList = patientList;
 	}
-
 	public void setPhysicianList(ArrayList<Physician> physicianList) {
 		PhysicianList = physicianList;
 	}
-
 	public void setNurseList(ArrayList<Nurse> nurseList) {
 		NurseList = nurseList;
 	}
-	*/
+	
 	
 	public String toString() {
 		return "EMERGENCY DPT : [TRANSPORTERS :" + transporterNb + ", NURSES :" + nurseNb + ", PHYSICIANS :"
 				+ physicianNb + ", BOX ROOMS :" + boxRoomNb + ", SHOCK ROOMS :" + shockRoomNb + 
 				", LABORATORY ROOMS :" + labRoomNb + ", MRI ROOMS :" + mriRoomNb + ", RADIOGRAPHY ROOMS :"
 				+ xRayRoomNb + "]";
+	}
+
+	public Registration getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+	}
+
+	public Consultation getConsultation() {
+		return consultation;
+	}
+
+	public void setConsultation(Consultation consultation) {
+		this.consultation = consultation;
+	}
+
+	public Transportation getTransportation() {
+		return transportation;
+	}
+
+	public void setTransportation(Transportation transportation) {
+		this.transportation = transportation;
+	}
+
+	public MRI getMri() {
+		return mri;
+	}
+
+	public void setMri(MRI mri) {
+		this.mri = mri;
+	}
+
+	public Blood getBlood() {
+		return blood;
+	}
+
+	public void setBlood(Blood blood) {
+		this.blood = blood;
+	}
+
+	public Xray getXray() {
+		return xray;
+	}
+
+	public void setXray(Xray xray) {
+		this.xray = xray;
+	}
+
+	public Installation getInstallation() {
+		return installation;
+	}
+
+	public void setInstallation(Installation installation) {
+		this.installation = installation;
 	}
 }
