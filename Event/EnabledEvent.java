@@ -1,8 +1,8 @@
-package Event;
+package event;
 
 import java.util.ArrayList;
 
-import Core.EmergencyDepartment;
+import core.EmergencyDepartment;
 
 public class EnabledEvent {
 	private ArrayList<EventType> abledList;

@@ -1,10 +1,10 @@
-package Event;
+package event;
 
 import java.util.ArrayList;
 
 import core.EmergencyDepartment;
 import core.PatientState;
-import core.Uniform;
+import core.distribution.Uniform;
 
 public class EventQueue {
 	private ArrayList<Event> nextEvents;

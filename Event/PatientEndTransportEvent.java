@@ -1,10 +1,10 @@
-package Event;
+package event;
 
-import Core.EmergencyDepartment;
-import Core.HumanResourceState;
-import Core.Patient;
-import Core.PatientState;
-import Core.Transporter;
+import core.EmergencyDepartment;
+import core.HumanResourceState;
+import core.Patient;
+import core.PatientState;
+import core.Transporter;
 
 public class PatientEndTransportEvent extends Event{
 	

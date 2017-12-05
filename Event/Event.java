@@ -1,6 +1,6 @@
-package Event;
+package event;
 
-import Core.EmergencyDepartment;
+import core.EmergencyDepartment;
 
 public abstract class Event implements Comparable<Event>{
 	private EventType name;
