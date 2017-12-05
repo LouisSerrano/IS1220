@@ -1,4 +1,4 @@
-package core;
+package Core;
 
 public abstract class HumanResource {
 
@@ -19,13 +19,8 @@ public abstract class HumanResource {
 		this.setSurname(surname);
 		this.setName(name);
 		this.type = type;
-		this.state = HumanResourceState.IDLE;
 	}
 
-	public int getId() {
-		return this.id;
-	}
-	
 	public String getSurname() {
 		return surname;
 	}
@@ -46,12 +41,18 @@ public abstract class HumanResource {
 		return HumanResource.counter;
 	}
 	
-	public HumanResourceState getHumanResourceState() {
-		return this.state;
-	}
+	
 	
 	public String toString() {
 		return "Human Resource : [id = " + id + ", type = " + type + ", name = " + name + " " + surname 
 				+ ", state = " + state + "]";
+	}
+	
+	public HumanResourceState getHumanResourceState(){
+		return state;
+	}
+	
+	public void setHumanResourceState(HumanResourceState state){
+		this.state=state;
 	}
 }
