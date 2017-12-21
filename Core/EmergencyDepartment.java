@@ -5,7 +5,7 @@ import Event.*;
 
 public class EmergencyDepartment {
 	private String name;
-	private int simTme;
+	private int simTime;
 	private ArrayList<Patient> PatientList;
 	private ArrayList<Physician> PhysicianList;
 	private ArrayList<Nurse> NurseList;
@@ -23,7 +23,7 @@ public class EmergencyDepartment {
 	
 	public EmergencyDepartment(){
 		this.name="ED";
-		this.simTme=0;
+		this.simTime=0;
 		this.PatientList=new ArrayList<Patient>();
 		this.TransporterList=new ArrayList<Transporter>();
 		this.PhysicianList= new ArrayList<Physician>();
@@ -47,7 +47,7 @@ public class EmergencyDepartment {
 	private EmergencyDepartment(int transporterNb, int nurseNb, int physicianNb, int boxRoomNb, 
 								int shockRoomNb, int labRoomNb, int mriRoomNb, int xRayRoomNb){
 		this.name="ED";
-		this.simTme=0;
+		this.simTime=0;
 		this.PatientList=new ArrayList<Patient>();
 		this.TransporterList=new ArrayList<Transporter>();
 		this.NurseList= new ArrayList<Nurse>();
@@ -175,17 +175,51 @@ public class EmergencyDepartment {
 		
 	}
 	
-	public Room getFreeRoom(){
+	public Room getFreeRoom(String type){
 		Room result = null;
-		for(Room room : this.RoomList){
-			if(room.getRoomState().equals(RoomState.AVAILABLE){
-				result = room;
-				break;
-			}		
-		}
-		return result;
 		
+		switch(type){
+		
+		case "LABORATORY_ROOM":
+		for(Room room : this.RoomList){
+			if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
+				result = (LaboratoryRoom) room;
+				break;
+			}
+		}
+		case "MRI_ROOM":
+			for(Room room : this.RoomList){
+				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
+					result = (MriRoom) room;
+					break;
+				}
+			}
+		case "RADIOGRAPHY_ROOM":
+			for(Room room : this.RoomList){
+				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
+					result = (RadiographyRoom) room;
+					break;
+					}	
+				}
+		case "BOX_ROOM":
+			for(Room room : this.RoomList){
+				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
+					result = (BoxRoom) room;
+					break;
+					}
+			}
+		case "SHOCK_ROOM":
+			for(Room room : this.RoomList){
+				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
+					result = (ShockRoom) room;
+					break;
+					}
+			}
+		
+		}
+		return result;		
 	}
+	
 	
 	public Transporter getFreeTransporter(){
 		Transporter result = null;
@@ -227,8 +261,8 @@ public class EmergencyDepartment {
 	public String getName() {
 		return name;
 	}
-	public int getSimTme() {
-		return simTme;
+	public int getSimTime() {
+		return simTime;
 	}
 	public ArrayList<Patient> getPatientList() {
 		return PatientList;
@@ -248,8 +282,8 @@ public class EmergencyDepartment {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setSimTme(int simTme) {
-		this.simTme = simTme;
+	public void setSimTime(int simTime) {
+		this.simTime = simTime;
 	}
 	public void setPatientList(ArrayList<Patient> patientList) {
 		PatientList = patientList;
