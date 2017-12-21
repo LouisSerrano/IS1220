@@ -260,8 +260,6 @@ public enum EventType {
 
 
 
-
-	
 	public String getName() {
 		return name;
 	}

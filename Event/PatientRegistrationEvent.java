@@ -11,7 +11,7 @@ public class PatientRegistrationEvent extends Event {
 	
 	
 	public PatientRegistrationEvent(int timeStamp,Patient patient, Nurse nurse){
-		super(EventType.REGIST, timeStamp);
+		super("REGISTRATION OF"+patient.getName(),EventType.REGIST, timeStamp);
 		this.patient= patient;
 		this.nurse=nurse;
 		
@@ -24,6 +24,8 @@ public class PatientRegistrationEvent extends Event {
 	 */
 	@Override
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
+
 		patient.setPatientState(PatientState.WAITING_INSTALLATION);
 		system.getRegistration().getWaitingQueue().remove(this.patient);
 		

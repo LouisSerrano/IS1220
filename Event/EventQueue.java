@@ -2,89 +2,24 @@ package Event;
 import java.util.ArrayList;
 
 import Core.EmergencyDepartment;
+import Core.Patient;
+import Core.PatientCreator;
+import Core.SeverityLevel;
 public class EventQueue {
 	private ArrayList<Event> nextEvents;
 	
+	public ArrayList<Event> getNextEvents() {
+		return nextEvents;
+	}
+
+	public void setNextEvents(ArrayList<Event> nextEvents) {
+		this.nextEvents = nextEvents;
+	}
+
 	public EventQueue(){
 		this.nextEvents=new ArrayList<Event>();
 	}
 	
-	public EventQueue(EnabledEvent events, EmergencyDepartment system){
-		nextEvents= new ArrayList<Event>();
-		for (EventType eT : events.getAbledList()){
-			if (eT.name.equals("RegistrationEvent")){
-				this.nextEvents.add(new PatientRegistrationEvent(
-						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse()));
-				
-			}
-			if (eT.name.equals("PatientStartInstallationEvent")){
-				this.nextEvents.add(new PatientStartInstallationEvent(
-						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse(), system.getFreeRoom()));
-			}
-			if (eT.name.equals("PatientStartConsultationEvent")){
-				
-				this.nextEvents.add(new PatientStartConsultationEvent(
-						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreePhysician()));
-				
-			}
-			
-			if (eT.name.equals("PatientStartTransportationEvent")){
-				this.nextEvents.add(new PatientStartTransportEvent(
-						system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeTransporter()));
-				
-			}
-			if (eT.name.equals("PatientStartXrayEvent")){
-				this.nextEvents.add(new PatientStartExaminationEvent(
-						Xray.waitingQueue.pop(), system.getSimTme()));
-				
-				
-			}
-			if (eT.name.equals("PatientStartBloodEvent")){
-				this.nextEvents.add(new PatientStartExaminationEvent(
-						Blood.waitingQueue.pop(), system.getSimTme()));
-				
-			}
-			if (eT.name.equals("PatientStartMriEvent")){
-				this.nextEvents.add(new PatientStartExaminationEvent(
-						Mri.waitingQueue.pop(), system.getSimTme()));
-				
-			}
-			if (eT.name.equals("PatientEndInstallationEvent")){
-				
-				this.nextEvents.add(new PatientEndInstallationEvent(
-						system.getNextPatient(PatientState.BI), system.getSimTme()+2));
-				
-			}
-			if (eT.name.equals("PatientEndConsultationEvent")){
-				this.nextEvents.add(new PatientEndConsultationEvent(
-						system.getNextPatient(PatientState.BC), system.getSimTme()+Uniform.generateSample()));
-				
-			}
-			if (eT.name.equals("PatientEndTransportationEvent")){
-				
-			}
-			if (eT.name.equals("PatientEndXrayEvent")){
-				
-			}
-			if (eT.name.equals("PatientEndBloodEvent")){
-				
-			}
-			if (eT.name.equals("PatientEndMriEvent")){
-				
-			}
-			
-			
-			
-		}
-	}
-	
-	public void addEvent(Event e){
-		this.nextEvents.add(e);
-	}
-	
-	public void deleteEvent(Event e){
-		this.nextEvents.remove(e);
-	}
 	
 	
 	public void sort(){
@@ -102,16 +37,103 @@ public class EventQueue {
 			nextEvents.set(i+1, e);
 			
 		}
+	}
 		
-	Event addInstanceOfEventType(EventType eT, EmergencyDepartment system){
+	/**
+	 * Cette fonction ne permet pas de rajouter une instance de fin d'événement; ie PatientEndInstallationEvent, PatientEndConsultationEvent... 
+	 * parce que c'est trop complqiué à gérer. Les instances sont automatiquement ajoutées lorsque les PatientStartInstallationEvent... sont éxecutées.
+	 * @param eT
+	 * @param system
+	 */
+	public void addInstanceOfEventType(EventType eT, EmergencyDepartment system){
+		
+		if(eT.name.equals("PatientArrival1")){
+			Patient newpatient= PatientCreator.newPatient(SeverityLevel.L1);
+			this.nextEvents.add(new Arrival1Event(newpatient));
+		}
+		
+		if(eT.name.equals("PatientArrival2")){
+			Patient newpatient= PatientCreator.newPatient(SeverityLevel.L2);
+			this.nextEvents.add(new Arrival1Event(newpatient));
+		}
+		if(eT.name.equals("PatientArrival3")){
+			Patient newpatient= PatientCreator.newPatient(SeverityLevel.L3);
+			this.nextEvents.add(new Arrival1Event(newpatient));
+		}
+		if(eT.name.equals("PatientArrival4")){
+			Patient newpatient= PatientCreator.newPatient(SeverityLevel.L4);
+			this.nextEvents.add(new Arrival1Event(newpatient));
+		}
+		if(eT.name.equals("PatientArrival5")){
+			Patient newpatient= PatientCreator.newPatient(SeverityLevel.L5);
+			this.nextEvents.add(new Arrival1Event(newpatient));
+		}
 		
 		if (eT.name.equals("RegistrationEvent")){
 			this.nextEvents.add(new PatientRegistrationEvent(
-					system.getSimTme(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse()));
+					system.getSimTime(), system.getRegistration().getWaitingQueue().get(0), system.getFreeNurse()));	
+		}
+		
+		if (eT.name.equals("PatientStartInstallationEvent")){
+			Patient patient = system.getInstallation().getWaitingQueue().get(0);
+			SeverityLevel level= patient.getSeverityLevel();
+			
+			if(level.equals(SeverityLevel.L1) || level.equals(SeverityLevel.L2)){
+				
+			this.nextEvents.add(new PatientStartInstallationEvent(
+					system.getSimTime(), system.getInstallation().getWaitingQueue().get(0), system.getFreeNurse(), system.getFreeRoom("ShockRoom")));
+			}
+			else {
+				this.nextEvents.add(new PatientStartInstallationEvent(
+						system.getSimTime(), system.getInstallation().getWaitingQueue().get(0), system.getFreeNurse(), system.getFreeRoom("BoxRoom")));
+				
+			}
+		}
+		
+		if (eT.name.equals("PatientStartConsultationEvent")){
+			
+			this.nextEvents.add(new PatientStartConsultationEvent(
+					system.getSimTime(), system.getConsultation().getWaitingQueue().get(0), system.getFreePhysician()));
 			
 		}
+		
+		if (eT.name.equals("PatientStartTransportationEvent")){
+			this.nextEvents.add(new PatientStartTransportEvent(
+					system.getSimTime(), system.getTransportation().getWaitingQueue().get(0), system.getFreeTransporter()));
+			
+		}
+		
+		if (eT.name.equals("PatientStartXrayEvent")){
+			this.nextEvents.add(new PatientStartXrayEvent(
+					system.getSimTime(), system.getXray().getWaitingQueue().get(0), system.getFreeRoom("RADIOGRAPHY_ROOM")));
+			
+		}
+		if (eT.name.equals("PatientStartMriEvent")){
+			this.nextEvents.add(new PatientStartMriEvent(
+					system.getSimTime(), system.getMri().getWaitingQueue().get(0), system.getFreeRoom("MRI_ROOM")));
+			
+		}
+		if (eT.name.equals("PatientStartBloodEvent")){
+			this.nextEvents.add(new PatientStartBloodEvent(
+					system.getSimTime(), system.getBlood().getWaitingQueue().get(0), system.getFreeRoom("LABORATORY_ROOM")));
+			
+			}
+		}
+		
+		public void deleteInstancesOfEventType(EventType eT){
+			for(Event e: this.nextEvents){
+				if(e.getType().equals(eT)){
+					this.nextEvents.remove(e);
+				}
+			}
+			
+		}
+		
+		
+		
+		
 	}
-	}
+	
 		
 	
 

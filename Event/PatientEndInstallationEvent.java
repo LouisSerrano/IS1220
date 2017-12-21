@@ -13,12 +13,14 @@ public class PatientEndInstallationEvent extends Event {
 	private Nurse nurse;
 	
 	public PatientEndInstallationEvent(int timeStamp, Patient patient, Nurse nurse){
-		super(EventType.END_INSTAL,timeStamp);
+		super("END OF INSTALLATION OF"+patient.getName(),EventType.END_INSTAL,timeStamp);
 		this.patient=patient;
 		this.nurse=nurse;
 	}
 	
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
+
 		patient.setPatientState(PatientState.WAITING_CONSULTATION);
 		system.getConsultation().addPatientToQueue(this.patient);
 		nurse.setHumanResourceState(HumanResourceState.IDLE);

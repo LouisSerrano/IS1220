@@ -11,18 +11,19 @@ import Core.Room;
 import Core.RoomState;
 import Core.Xray;
 
-public class PatientStartExaminationEvent extends Event {
+public abstract class PatientStartExaminationEvent extends Event {
 	
 	private Patient patient;
 	private Room room;
 	
-	public PatientStartExaminationEvent(EventType name, int timeStamp, Patient patient, Room room){
-		super(name ,timeStamp);
+	public PatientStartExaminationEvent(EventType type, int timeStamp, Patient patient, Room room){
+		super("START EXAMINATION OF" +patient.getName(),type ,timeStamp);
 		this.patient=patient;
 		this.room= room;
 		}
 	
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
 		this.room.setRoomState(RoomState.USED);
 		this.patient.setPatientState(PatientState.BEING_EXAMINATED);
 		
@@ -46,6 +47,22 @@ switch(patient.getDirection()){
 	}
 		
 		
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 }

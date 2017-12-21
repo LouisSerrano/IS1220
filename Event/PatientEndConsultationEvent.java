@@ -16,12 +16,13 @@ public class PatientEndConsultationEvent extends Event {
 	private String decision;
 	
 	public PatientEndConsultationEvent(int timeStamp, Patient patient,Physician physician, Room room){
-		super(EventType.END_VISIT,timeStamp);
+		super("END OF CONSULTATION"+patient.getName(),EventType.END_VISIT,timeStamp);
 		this.patient=patient;
 		this.physician= physician;
 		}
 
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
 		this.decision = this.patient.getDecisionFunction().getRequest();
 		
 		

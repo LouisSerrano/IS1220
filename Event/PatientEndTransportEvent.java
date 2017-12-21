@@ -12,12 +12,14 @@ public class PatientEndTransportEvent extends Event{
 	private Transporter transporter;
 	
 	public PatientEndTransportEvent(int timeStamp, Patient patient, Transporter transporter){
-		super(EventType.END_TRANSPORT,timeStamp);
+		super("END OF TRANSPORT"+patient.getName(),EventType.END_TRANSPORT,timeStamp);
 		this.patient=patient;
 		this.transporter= transporter;
 		}
 	@Override
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
+
 		transporter.setHumanResourceState(HumanResourceState.IDLE);
 		switch(patient.getDirection()){
 		

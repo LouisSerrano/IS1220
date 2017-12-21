@@ -9,18 +9,20 @@ import Core.Room;
 import Core.RoomState;
 import Core.Xray;
 
-public class PatientEndExaminationEvent extends Event {
+public abstract class PatientEndExaminationEvent extends Event {
 	
 	private Patient patient;
 	private Room room;
 	
 	public PatientEndExaminationEvent(EventType name, int timeStamp, Patient patient, Room room){
-		super(name ,timeStamp);
+		super("END OF EXAMINATION"+ patient.getName(),name ,timeStamp);
 		this.patient=patient;
 		this.room= room;
 		}
 	
 	public void execute(EmergencyDepartment system){
+		super.execute(system);
+
 	
 	this.room.setRoomState(RoomState.AVAILABLE);
 	this.patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
