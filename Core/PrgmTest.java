@@ -1,10 +1,53 @@
-package core;
+package Core;
 
-import java.util.ArrayList;
+import Core.Distribution.Dirac;
+import Core.Distribution.Uniform;
 
 public class PrgmTest {
 
 	public static void main(String[] args) {
+		
+		Uniform consultationDistribution = new Uniform(5,20);
+		Uniform mriDistribution = new Uniform(30,70);
+		Uniform bloodTestDistribution = new Uniform(15,90);
+		Uniform radiographyDistribution = new Uniform(10,20);
+		Dirac installationDistribution = new Dirac(2);
+		Dirac transportationDistribution = new Dirac(5);
+
+
+		
+		Consultation consultation = Consultation.getConsultationInstance();
+		consultation.setCost(150);
+		consultation.setDistribution(consultationDistribution);
+		
+		MRI mri = MRI.getMRIInstance();
+		mri.setCost(1000);
+		mri.setDistribution(mriDistribution);
+		
+		Blood blood = Blood.getBloodInstance();
+		blood.setCost(350);
+		blood.setDistribution(bloodTestDistribution);
+		
+		Xray xray = Xray.getXRayInstance();
+		xray.setCost(550);
+		xray.setDistribution(radiographyDistribution);
+		
+		Installation installation = Installation.getInstallationInstance();
+		installation.setDistribution(installationDistribution);
+		
+		Transportation transportation = Transportation.getTransportationInstance();
+		transportation.setDistribution(transportationDistribution);
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+		
 		Time t = new Time(16, 20);
 		System.out.println(t);
 		
@@ -13,38 +56,33 @@ public class PrgmTest {
 		System.out.println(n1);
 		System.out.println(p1);
 		System.out.println(HumanResource.getCounter());
+				
 		
-		Consultation c = new Consultation(450, null);
-		System.out.println(c);
-		
-		Time aT = new Time(12, 20);
-		
-		Patient patient1 = new Patient("Brown", "James", SeverityLevel.L1, aT);
+		Patient patient1 = new Patient("Brown", "James", SeverityLevel.L1, 10);
 		//System.out.println(patient);	
-		Patient patient2 = new Patient("Brown", "James", SeverityLevel.L1, aT);
-		Patient patient3 = new Patient("Brown", "James", SeverityLevel.L2, aT);
-		Patient patient4 = new Patient("Brown", "James", SeverityLevel.L3, aT);
-		Patient patient5 = new Patient("Brown", "James", SeverityLevel.L4, aT);
-		Patient patient6 = new Patient("Brown", "James", SeverityLevel.L4, aT);
-		Patient patient7 = new Patient("Brown", "James", SeverityLevel.L5, aT);
-		Patient patient8 = new Patient("Brown", "James", SeverityLevel.L5, aT);
+		Patient patient2 = new Patient("Brown", "James", SeverityLevel.L1, 12);
+		Patient patient3 = new Patient("Brown", "James", SeverityLevel.L2, 13);
+		Patient patient4 = new Patient("Brown", "James", SeverityLevel.L3, 15);
+		Patient patient5 = new Patient("Brown", "James", SeverityLevel.L4, 16);
+		Patient patient6 = new Patient("Brown", "James", SeverityLevel.L4, 17);
+		Patient patient7 = new Patient("Brown", "James", SeverityLevel.L5, 17);
+		Patient patient8 = new Patient("Brown", "James", SeverityLevel.L5, 19);
 		
-		Patient patientTest = new Patient("Testing", "Test", SeverityLevel.L4, aT);	
+		Patient patientTest = new Patient("Testing", "Test", SeverityLevel.L4, 20);	
 		
-		HealthService hS = new Consultation();
 		
-		hS.addPatientToQueue(patient1);
-		hS.addPatientToQueue(patient2);
-		hS.addPatientToQueue(patient7);
-		hS.addPatientToQueue(patient6);
-		hS.addPatientToQueue(patient5);
-		hS.addPatientToQueue(patient4);
-		hS.addPatientToQueue(patient3);
-		hS.addPatientToQueue(patient8);
+		consultation.addPatientToQueue(patient1);
+		consultation.addPatientToQueue(patient2);
+		consultation.addPatientToQueue(patient7);
+		consultation.addPatientToQueue(patient6);
+		consultation.addPatientToQueue(patient5);
+		consultation.addPatientToQueue(patient4);
+		consultation.addPatientToQueue(patient3);
+		consultation.addPatientToQueue(patient8);
 
 		
-		hS.addPatientToQueue(patientTest);
-		System.out.println(hS.getWaitingQueue());
+		consultation.addPatientToQueue(patientTest);
+		System.out.println(consultation.getWaitingQueue());
 		
 		
 		
