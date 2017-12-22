@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Core.Distribution.ConsultationReqProbability;
-import Event.Event;
+import event.Event;
 
 public class Patient {
 	
@@ -36,7 +36,7 @@ public class Patient {
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = PatientState.WAITING_REGISTRATION;
-		this.setDecisionFunction(new ConsultationReqProbability());
+		this.decisionFunction=new ConsultationReqProbability();
 		this.history = new HashMap<Event, Integer>();
 	}
 	
@@ -47,6 +47,8 @@ public class Patient {
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = PatientState.WAITING_REGISTRATION;
+		this.decisionFunction=new ConsultationReqProbability();
+
 	}	
 	
 	
@@ -95,7 +97,7 @@ public class Patient {
 	}
 
 	public String toString() {
-		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname + ", Severity Level : "
+		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname +", arrival Time :"+arrivalTime+", Severity Level : "
 				 + severity + ", Insurance : " + insurance + ", STATE : " + state + ", LOCATION : " + 
 				room + ", TOTAL CHARGES : " + totalCharges + "]";
 	}
