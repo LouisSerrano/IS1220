@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.EmergencyDepartment;
 import Core.Patient;
@@ -13,7 +13,10 @@ public class PatientEndMriEvent extends PatientEndExaminationEvent {
 	
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
+		this.toString();
+	}
+	public String toString() {
+	return "End Mri of the Patient " + super.getPatient().getName() +  "at the time " + this.getTimeStamp()+"in the Room"+super.getRoom().getName();
+	}
+}
 
-	
-}
-}

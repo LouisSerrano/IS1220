@@ -1,4 +1,7 @@
-package Event;
+package event;
+
+import Core.EmergencyDepartment;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+import Core.Patient;
 
 import Core.EmergencyDepartment;
 import Core.Patient;
@@ -11,7 +14,11 @@ public class Arrival1Event extends PatientArrivalEvent {
 	
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
-		system.getEventqueue().addInstanceOfEventType(EventType.ARR1, system);
+		this.toString();
 	}
-
+	
+	public String toString() {
+		
+		return super.toString();
+	}
 }

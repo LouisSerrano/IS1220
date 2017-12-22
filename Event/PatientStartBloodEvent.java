@@ -1,4 +1,6 @@
-package Event;
+package event;
+
+import Core.Distribution.Uniform;
 
 import Core.EmergencyDepartment;
 import Core.LaboratoryRoom;
@@ -6,7 +8,6 @@ import Core.Patient;
 import Core.PatientState;
 import Core.Room;
 import Core.RoomState;
-import Core.Distribution.Uniform;
 
 public class PatientStartBloodEvent extends PatientStartExaminationEvent{
 	
@@ -22,9 +23,14 @@ public class PatientStartBloodEvent extends PatientStartExaminationEvent{
 		patient.setPatientState(PatientState.BEING_EXAMINATED);
 		system.getBlood().getWaitingQueue().remove(patient);
 		patient.setDirection(null);
-		int t = new Uniform(15,90).generateSample();
+		int t = system.getBlood().getDistribution().generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndBloodEvent(system.getSimTime()+t,patient,room));
-
+		this.toString();
 	}
+	
+	public String toString() {
+		
+		return "Start BloodTest of the Patient " + super.getPatient().getName() +  "at the time " + this.getTimeStamp()+"in the Room"+super.getRoom().getName();
+		}
 
 }

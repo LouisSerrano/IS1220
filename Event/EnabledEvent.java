@@ -1,27 +1,25 @@
-package Event;
+package event;
 
 import java.util.ArrayList;
-
 import Core.EmergencyDepartment;
 
 public class EnabledEvent {
 	private ArrayList<EventType> abledList;
 	private ArrayList<EventType> disabledList;
 	
-	
+	/***
+	 * Initialement tous les types d'événement sont désactivés, il faut faire appel à la fonction update Availability
+	 */
 	
 	public EnabledEvent(){
-		ArrayList<EventType> abledList=new ArrayList<EventType>();
-		ArrayList<EventType> disabledList= new ArrayList<EventType>();
-		for (EventType eT: EventType.values()){
-			if (eT.available==true){
-				abledList.add(eT);
-			}
-			else{
-				disabledList.add(eT);
-			}	
+		this.abledList=new ArrayList<EventType>();
+		this.disabledList= new ArrayList<EventType>();
+		for (EventType eT : EventType.values()) {
+			this.disabledList.add(eT);
 		}
 	}
+	
+	
 	
 	
 	public EnabledEvent(EmergencyDepartment system){
@@ -30,7 +28,7 @@ public class EnabledEvent {
 		
 		for (EventType eT: EventType.values()){
 			eT.updateAvailability(system);
-			if (eT.available==true){
+			if (eT.isAvailable()==true){
 				abledList.add(eT);
 			}
 			else{
@@ -40,16 +38,61 @@ public class EnabledEvent {
 
 	}
 	
+	public EnabledEvent(ArrayList<EventType> enabledEvent, ArrayList<EventType> disabledEvent){
+		ArrayList<EventType> abledList=new ArrayList<EventType>();
+		ArrayList<EventType> disabledList= new ArrayList<EventType>();
+		
+		for(EventType eT : enabledEvent) {
+			abledList.add(eT);
+		}
+		for (EventType eT : disabledEvent) {
+			disabledList.add(eT);
+			
+		}
+		this.abledList=abledList;
+		this.disabledList=disabledList;
+		
+
+	}
+
 	
-	public void update(EmergencyDepartment system){
-		EnabledEvent old= system.getEnabledEventList();
-		for (EventType eT : old.getDisabledList()){
+	
+	public static EnabledEvent update(EmergencyDepartment system){
+		EnabledEvent old = system.getEnabledEventList();
+		EnabledEvent newly = new EnabledEvent(old.getAbledList(), old.getDisabledList());
+		int n = old.getDisabledList().size();
+		int i = 0;
+		
+		while (i<n) {
+			EventType eT = old.getDisabledList().get(i);
 			eT.updateAvailability(system);
-			if (eT.available==true){
-				old.abledList.add(eT);
-				old.disabledList.remove(eT);
-			}	
-		}	
+			
+			if (eT.isAvailable()){
+				newly.abledList.add(eT);	
+				newly.disabledList.remove(eT);
+				n=n-1;
+			}
+			i=i+1;
+		}
+		system.setEnabledEventList(newly);
+		return newly;
+	}
+	
+	public static void update2(EmergencyDepartment system) {
+		ArrayList<EventType> abledList=new ArrayList<EventType>();
+		ArrayList<EventType> disabledList= new ArrayList<EventType>();
+		for( EventType eT : EventType.values()) {
+			eT.updateAvailability(system);
+			if(eT.isAvailable()) {
+				abledList.add(eT);
+			}
+			else {
+				disabledList.add(eT);
+			}
+		}
+		system.getEnabledEventList().setAbledList(abledList);
+		system.getEnabledEventList().setDisabledList(disabledList);
+
 	}
 	
 	public void remove(EventType eT){

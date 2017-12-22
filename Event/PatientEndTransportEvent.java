@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.EmergencyDepartment;
 import Core.HumanResourceState;
@@ -19,6 +19,8 @@ public class PatientEndTransportEvent extends Event{
 	@Override
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
+		this.toString();
+
 
 		transporter.setHumanResourceState(HumanResourceState.IDLE);
 		switch(patient.getDirection()){
@@ -46,12 +48,11 @@ public class PatientEndTransportEvent extends Event{
 			system.getConsultation().addPatientToQueue(patient);
 			patient.setDirection(null);
 			break;
-			
-		
+		}
 	}
 	
-	
-
+public String toString() {
+	return "Transporter "+transporter.getName()+"completes transport of the Patient " + patient.getName() +  "at the time " + this.getTimeStamp()+"to "+patient.getDirection();
 }
 
 }

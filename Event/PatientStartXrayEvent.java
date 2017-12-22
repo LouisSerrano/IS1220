@@ -1,4 +1,6 @@
-package Event;
+package event;
+
+import Core.Distribution.Uniform;
 
 import Core.EmergencyDepartment;
 import Core.Patient;
@@ -6,7 +8,6 @@ import Core.PatientState;
 import Core.RadiographyRoom;
 import Core.Room;
 import Core.RoomState;
-import Core.Distribution.Uniform;
 
 public class PatientStartXrayEvent extends PatientStartExaminationEvent {
 	
@@ -25,9 +26,12 @@ public class PatientStartXrayEvent extends PatientStartExaminationEvent {
 		
 		int t = new Uniform(10,20).generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndXrayEvent(system.getSimTime()+t,patient, room));
-				
+		this.toString();
 	}
-
+	public String toString() {
+		
+	return "Start Xray of the Patient " + super.getPatient().getName() +  "at the time " + this.getTimeStamp()+"in the Room"+super.getRoom().getName();
+	}
 }
 
 

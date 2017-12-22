@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.Blood;
 import Core.EmergencyDepartment;
@@ -30,6 +30,24 @@ public abstract class PatientEndExaminationEvent extends Event {
 
 	
 }
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	
 }
 	
 	

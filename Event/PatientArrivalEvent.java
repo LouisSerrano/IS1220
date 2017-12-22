@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.EmergencyDepartment;
 import Core.Patient;
@@ -18,11 +18,13 @@ public class PatientArrivalEvent extends Event {
 		super.execute(system);
 		patient.setPatientState(PatientState.WAITING_REGISTRATION);
 		system.getRegistration().addPatientToQueue(patient);
+		system.getPatientList().add(patient);
+		this.toString();
 	}
 	
 	
 	public String toString() {
-		return "Patient " + patient.getName() + " arrived at " + patient.getArrivalTime();
+		return "Patient " + patient.getName() + " arrived at " + patient.getArrivalTime() +" with the Severitylevel "+this.patient.getSeverityLevel().getLevel();
 	}
 }
 

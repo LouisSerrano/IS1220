@@ -1,4 +1,6 @@
-package Event;
+package event;
+
+import Core.Distribution.Uniform;
 
 import Core.EmergencyDepartment;
 import Core.HumanResourceState;
@@ -6,7 +8,6 @@ import Core.Patient;
 import Core.PatientState;
 import Core.Physician;
 import Core.Room;
-import Core.Distribution.Uniform;
 
 public class PatientStartConsultationEvent extends Event{
 	private Patient patient;
@@ -14,8 +15,9 @@ public class PatientStartConsultationEvent extends Event{
 	private Room room;
 	
 	public PatientStartConsultationEvent(int timeStamp, Patient patient,Physician physician){
-		super("START OF CONSLTATION"+patient.getName(),EventType.START_VISIT,timeStamp);
+		super("START OF CONSULTATION"+patient.getName(),EventType.START_VISIT,timeStamp);
 		this.patient=patient;
+		this.room=patient.getRoom();
 		this.physician=physician;
 		}
 
@@ -25,14 +27,14 @@ public class PatientStartConsultationEvent extends Event{
 		patient.setPatientState(PatientState.BEING_CONSULTED);
 		system.getConsultation().getWaitingQueue().remove(this.patient);
 		physician.setHumanResourceState(HumanResourceState.VISITING);
-		int t = new Uniform(5,20).generateSample();
+		int t = system.getConsultation().getDistribution().generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndConsultationEvent(system.getSimTime()+t,patient,physician, room));
-		
+		this.toString();
 	}
 	
 	public String toString() {
-		return "Starting consultation of patient " + patient.getName() + " at the time " + this.getTimeStamp() + " with the physician "
-				+ physician.getName() + " in the room " + room.getName();
+		return "Physician "+physician.getName()+" starts Consultation of the Patient " + patient.getName() + " at the time " + super.getTimeStamp() + 
+				" in the room " + room.getName();
 	}
 	
 	

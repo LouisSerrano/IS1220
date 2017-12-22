@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.EmergencyDepartment;
 import Core.Nurse;
@@ -25,11 +25,16 @@ public class PatientRegistrationEvent extends Event {
 	@Override
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
-
 		patient.setPatientState(PatientState.WAITING_INSTALLATION);
 		system.getRegistration().getWaitingQueue().remove(this.patient);
-		
+		system.getInstallation().addPatientToQueue(this.patient);
+		this.toString();
 	}
+	
+	public String toString() {
+		
+		return "Nurse "+nurse.getName()+" registrates the patient "+ patient.getName() +  " at the time " + this.getTimeStamp();
+		}
 	
 	
 	

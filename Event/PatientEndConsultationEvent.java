@@ -1,4 +1,6 @@
-package Event;
+package event;
+
+import Core.Distribution.ConsultationReqProbability;
 
 import Core.EmergencyDepartment;
 import Core.HealthService;
@@ -7,24 +9,28 @@ import Core.Patient;
 import Core.PatientState;
 import Core.Physician;
 import Core.Room;
-import Core.Distribution.ConsultationReqProbability;
+import Core.RoomState;
 
 public class PatientEndConsultationEvent extends Event {
 	
 	private Patient patient;
 	private Physician physician;
 	private String decision;
+	private Room room;
 	
 	public PatientEndConsultationEvent(int timeStamp, Patient patient,Physician physician, Room room){
 		super("END OF CONSULTATION"+patient.getName(),EventType.END_VISIT,timeStamp);
 		this.patient=patient;
 		this.physician= physician;
+		this.room= room;
+		this.decision = patient.getDecisionFunction().getRequest();
 		}
 
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
-		this.decision = this.patient.getDecisionFunction().getRequest();
-		
+		this.room.setRoomState(RoomState.AVAILABLE);
+		patient.setRoom(null);
+		String decision = this.decision;
 		
 		switch(decision){
 		case "NO_TEST_REQUIRED":
@@ -54,7 +60,12 @@ public class PatientEndConsultationEvent extends Event {
 		}
 		system.getConsultation().getWaitingQueue().remove(this.patient);
 		physician.setHumanResourceState(HumanResourceState.IDLE);
+		this.toString();
 		
+	}
+	public String toString() {
+		return "Physician " + physician.getName()+" completes Consultation for the patient "+patient.getName() +  " at the time " + this.getTimeStamp()+" in the Room "+room.getName()+" and the result of the consultation is "+this.decision;
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package Event;
+package event;
 
 import Core.EmergencyDepartment;
 import Core.HumanResourceState;
@@ -11,11 +11,13 @@ import Core.RoomState;
 public class PatientEndInstallationEvent extends Event {
 	private Patient patient;
 	private Nurse nurse;
+	private Room room;
 	
-	public PatientEndInstallationEvent(int timeStamp, Patient patient, Nurse nurse){
+	public PatientEndInstallationEvent(int timeStamp, Patient patient, Nurse nurse, Room room){
 		super("END OF INSTALLATION OF"+patient.getName(),EventType.END_INSTAL,timeStamp);
 		this.patient=patient;
 		this.nurse=nurse;
+		this.room=room;
 	}
 	
 	public void execute(EmergencyDepartment system){
@@ -29,8 +31,7 @@ public class PatientEndInstallationEvent extends Event {
 	}
 	
 	public String toString() {
-		return "Installation finished for patient " + patient.getName() + " at the time " + this.getTimeStamp() + " with the nurse "
-				+ nurse.getName();
+		return "Nurse  "+nurse.getName()+" completes Installation for the patient " + patient.getName() + " at the time " + this.getTimeStamp() +" in the room "+room.getName();
 	}
 	
 
