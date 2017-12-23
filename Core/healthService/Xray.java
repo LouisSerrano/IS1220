@@ -2,15 +2,15 @@ package core.healthservice;
 
 import core.distribution.ProbabilityDistribution;
 
-public class Blood extends HealthService {
+public class Xray extends HealthService {
 
 	/**
 	 * Private constructor
 	 * @param cost
 	 * @param distribution
 	 */
-	private Blood (double cost, ProbabilityDistribution distribution) {
-		super("BLOOD", cost, distribution);
+	private Xray (double cost, ProbabilityDistribution distribution) {
+		super("XRAY", cost, distribution);
 	}
 	
 	private static double cost;
@@ -20,7 +20,7 @@ public class Blood extends HealthService {
 	/**
 	 * Pre-initialised unique instance
 	 */
-	private static Blood INSTANCE = new Blood(cost, distribution);
+	private static Xray INSTANCE = new Xray(cost, distribution);
 	
 	/**
 	 * To let the user set the ProbabilityDistribution of the unique instance.
@@ -28,10 +28,6 @@ public class Blood extends HealthService {
 	 */
 	public void setDistribution(ProbabilityDistribution distrib){
 		distribution = distrib;
-	}
-	
-	public ProbabilityDistribution getDistribution() {
-		return this.distribution;
 	}
 	
 	/**
@@ -43,10 +39,10 @@ public class Blood extends HealthService {
 	}
 	
 	/**
-	 * To get the unique instance of Blood
+	 * To get the unique instance of XRay
 	 * @return
 	 */
-	public static Blood getBloodInstance() {
+	public static Xray getXRayInstance() {
 		return INSTANCE;
 	}
 	

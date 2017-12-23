@@ -1,12 +1,7 @@
-package core.healthService;
+package core.healthservice;
 
-import core.distribution.*;
+import core.distribution.ProbabilityDistribution;
 
-/**
- * Consultation is a Singleton that extends the class HealthService.
- * It has a unique instance, unique cost and unique distribution.
- *
- */
 public class Consultation extends HealthService {
 
 	/**
@@ -35,6 +30,9 @@ public class Consultation extends HealthService {
 		distribution = distrib;
 	}
 	
+	public ProbabilityDistribution getDistribution() {
+		return this.distribution;
+	}
 	/**
 	 * To let the user set the cost of the unique instance.
 	 * @param hSCost

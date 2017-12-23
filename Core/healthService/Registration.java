@@ -1,12 +1,7 @@
-package core.healthService;
+package core.healthservice;
 
-import core.distribution.*;
+import core.distribution.ProbabilityDistribution;
 
-/**
- * Registration is a Singleton that extends the class HealthService.
- * It has a unique instance, unique cost and unique distribution.
- *
- */
 public class Registration extends HealthService {
 
 	/**
@@ -14,16 +9,16 @@ public class Registration extends HealthService {
 	 * @param cost
 	 * @param distribution
 	 */
-	private Registration (double cost, ProbabilityDistribution distribution) {
-		super("REGISTRATION", cost, distribution);
+	private Registration (double cost) {
+		super("REGISTRATION", cost, null);
 	}
 	
-	private static ProbabilityDistribution distribution;
+	private static ProbabilityDistribution distribution = null;
 	
 	/**
 	 * Pre-initialised unique instance
 	 */
-	private static Registration INSTANCE = new Registration(0.0, distribution);
+	private static Registration INSTANCE = new Registration(0.0);
 	
 	/**
 	 * To let the user set the ProbabilityDistribution of the unique instance

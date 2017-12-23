@@ -1,12 +1,7 @@
-package core.healthService;
+package core.healthservice;
 
-import core.distribution.*;
+import core.distribution.ProbabilityDistribution;
 
-/**
- * Installation is a Singleton that extends the class HealthService.
- * It has a unique instance, unique cost and unique distribution.
- *
- */
 public class Installation extends HealthService {
 
 	/**
@@ -32,6 +27,7 @@ public class Installation extends HealthService {
 	public void setDistribution(ProbabilityDistribution distrib){
 		distribution = distrib;
 	}
+	
 	
 	/**
 	 * To get the unique instance of Installation

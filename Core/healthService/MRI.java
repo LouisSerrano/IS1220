@@ -1,12 +1,7 @@
-package core.healthService;
+package core.healthservice;
 
-import core.distribution.*;
+import core.distribution.ProbabilityDistribution;
 
-/**
- * MRI is a Singleton that extends the class HealthService.
- * It has a unique instance, unique cost and unique distribution.
- *
- */
 public class MRI extends HealthService {
 
 	/**
@@ -33,6 +28,10 @@ public class MRI extends HealthService {
 	 */
 	public void setDistribution(ProbabilityDistribution distrib){
 		distribution = distrib;
+	}
+	
+	public ProbabilityDistribution getDistribution() {
+		return this.distribution;
 	}
 	
 	/**

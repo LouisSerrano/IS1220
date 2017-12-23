@@ -1,12 +1,7 @@
-package core.healthService;
+package core.healthservice;
 
-import core.distribution.*;
+import core.distribution.ProbabilityDistribution;
 
-/**
- * Transportation is a Singleton that extends the class HealthService.
- * It has a unique instance, unique cost and unique distribution.
- *
- */
 public class Transportation extends HealthService {
 
 	/**

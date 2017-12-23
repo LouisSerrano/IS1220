@@ -1,10 +1,11 @@
-package core.healthService;
-
+package core.healthservice;
 import java.util.ArrayList;
 
-import core.*;
+import core.Patient;
 import core.distribution.ProbabilityDistribution;
 
+
+	
 public abstract class HealthService {
 	
 	private String type;
@@ -39,17 +40,15 @@ public abstract class HealthService {
 			this.waitingQueue.add(p);
 		}
 		else {
-			browsingQueue:
-			for (Patient patient : this.waitingQueue){
+			int i = 0;
+			while(i<this.waitingQueue.size() && severity>=Integer.parseInt(this.getWaitingQueue().get(i).getSeverityLevel().getLevel())){
 				//compares the severity levels of patients
-				int index = this.waitingQueue.indexOf(patient);
-				if (severity > Integer.parseInt(patient.getSeverityLevel().getLevel())){
-						this.waitingQueue.add(index, p);
-						break browsingQueue;
+				i+=1;
 				}
+			this.waitingQueue.add(i, p);
+				
 			}
 		}
-	}
 	
 	public double getCost() {
 		return this.cost;
@@ -63,3 +62,4 @@ public abstract class HealthService {
 				+ ", waiting queue : " + waitingQueue + "]";
 	}
 }
+
