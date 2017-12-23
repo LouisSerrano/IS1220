@@ -1,6 +1,20 @@
-package Core;
+package core;
 import java.util.ArrayList;
 
+import core.distribution.LaboratoryRoom;
+import core.healthservice.Blood;
+import core.healthservice.Consultation;
+import core.healthservice.Installation;
+import core.healthservice.MRI;
+import core.healthservice.Registration;
+import core.healthservice.Transportation;
+import core.healthservice.Xray;
+import core.room.BoxRoom;
+import core.room.MriRoom;
+import core.room.RadiographyRoom;
+import core.room.Room;
+import core.room.RoomState;
+import core.room.ShockRoom;
 import event.*;
 
 public class EmergencyDepartment {
@@ -283,6 +297,25 @@ public class EmergencyDepartment {
 		return result;
 		
 	}
+	
+	public Patient firstPatientToInstall() {
+		int n = this.getInstallation().getWaitingQueue().size();
+		ArrayList<Patient> patientList = this.getInstallation().getWaitingQueue();
+		
+		if(this.getFreeRoom("SHOCK_ROOM")==null) {
+			int i = 0;
+			while (i<n && (patientList.get(i).getSeverityLevel().equals(SeverityLevel.L1)||patientList.get(i).getSeverityLevel().equals(SeverityLevel.L2))) {
+				i+=1;
+			}
+			return patientList.get(i);
+		}
+		else {
+			return patientList.get(0);
+		}
+		
+		
+	}
+	
 	
 	public EventQueue getEventqueue() {
 		return eventqueue;
