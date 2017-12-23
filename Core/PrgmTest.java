@@ -2,9 +2,9 @@ package Core;
 
 import java.util.ArrayList;
 
-import Core.Distribution.Dirac;
-import Core.Distribution.Exponential;
-import Core.Distribution.Uniform;
+import Core.distribution.Dirac;
+import Core.distribution.Exponential;
+import Core.distribution.Uniform;
 import event.Arrival1Event;
 import event.Arrival2Event;
 import event.Arrival3Event;
@@ -13,16 +13,19 @@ import event.EnabledEvent;
 import event.Event;
 import event.EventQueue;
 import event.EventType;
+import event.PatientRegistrationEvent;
 
 public class PrgmTest {
 
+
 	public static void main(String[] args) {
+ 
 		
 		/**
 		 * Initialisation des différents paramètres du système
 		 */
 		
-		int Tend = 100;
+		int Tend = 50;
 		EmergencyDepartment system = new EmergencyDepartment();
 		system.setPhysicianNb(5);
 		system.setNurseNb(10);
@@ -62,11 +65,11 @@ public class PrgmTest {
 		Transportation transportation = Transportation.getTransportationInstance();
 		transportation.setDistribution(transportationDistribution);
 		
-		SeverityLevel.L1.setDistribution(new Exponential(0.05));
-		SeverityLevel.L2.setDistribution(new Exponential(0.01));
-		SeverityLevel.L3.setDistribution(new Exponential(0.01));
-		SeverityLevel.L4.setDistribution(new Exponential(0.01));
-		SeverityLevel.L5.setDistribution(new Exponential(0.01));
+		SeverityLevel.L1.setDistribution(new Exponential(0.1));
+		SeverityLevel.L2.setDistribution(new Exponential(0.1));
+		SeverityLevel.L3.setDistribution(new Exponential(0.1));
+		SeverityLevel.L4.setDistribution(new Exponential(0.1));
+		SeverityLevel.L5.setDistribution(new Exponential(0.1));
 				
 		/**
 		 * System.out.println(system);
@@ -130,17 +133,40 @@ public class PrgmTest {
 		
 		EnabledEvent enabledEvent0= system.getEnabledEventList();
 		System.out.println("DEBUT DU TEST");
+		System.out.println("Le temps max de la simulation est Tend = "+Tend);
+		
 		EnabledEvent enabledEvent1=EnabledEvent.update(system);
 		System.out.println("L'eventqueue est vide au départ : "+system.getEventqueue().getNextEvents());
 		
 		
 		EventQueue newEventQueue0 = EventQueue.updateEventQueue(enabledEvent1, enabledEvent0, system);
 		System.out.println(newEventQueue0);
+		
+		Patient patient1 = new Patient(SeverityLevel.L1,0);
+		Patient patient2 = new Patient(SeverityLevel.L1,1);
+		Patient patient3 = new Patient(SeverityLevel.L3,2);
+		
+		Nurse nurse1= new Nurse("Nurse","Generic");
+		PatientRegistrationEvent regist1 =new PatientRegistrationEvent(0, patient1, nurse1);
+		
+		System.out.println("TEST DE SORT");
+		/**
+		 * EventQueue eventQueueTest = new EventQueue();
+		 * eventQueueTest.getNextEvents().add(new Arrival1Event(patient1));
+		eventQueueTest.getNextEvents().add(new Arrival2Event(patient2));
+		eventQueueTest.getNextEvents().add(regist1);
+		System.out.println(eventQueueTest);
+		eventQueueTest.sort();
+		System.out.println(eventQueueTest);
+		 */
+		
+		System.out.println(system.getConsultation().getWaitingQueue());
 							
 		System.out.println("\n TEST DU CORPS DU MAIN \n");
 		
-		for(int i = 0; i <15; i++) {
-		System.out.println("L'etat du Systeme au début du tour "+i+"\n");
+		
+		while(system.getSimTime()<Tend){
+		System.out.println("L'etat du Systeme au temps "+system.getSimTime()+"\n");
 		System.out.println(system);
 		system.getEventqueue().getNextEvents().get(0).execute(system);
 		System.out.println("\n Le temps du systeme après execution est le suivant : "+system.getSimTime());
@@ -151,11 +177,11 @@ public class PrgmTest {
 		
 		EnabledEvent oldEnabledEvent= system.getEnabledEventList();
 		System.out.println("Liste des événements anciennement disponibles : "+oldEnabledEvent.getAbledList());
-		
+
 		EnabledEvent.update(system);
 		EnabledEvent newEnabledEvent=system.getEnabledEventList();
 		System.out.println("Liste des événements nouvellement disponibles : "+newEnabledEvent.getAbledList());
-				
+		
 		EventQueue newEventQueue = EventQueue.updateEventQueue(newEnabledEvent,oldEnabledEvent,system);
 		system.setEventqueue(newEventQueue);
 		
