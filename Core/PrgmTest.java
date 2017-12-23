@@ -62,23 +62,18 @@ public class PrgmTest {
 		Transportation transportation = Transportation.getTransportationInstance();
 		transportation.setDistribution(transportationDistribution);
 		
-		SeverityLevel.L1.setDistribution(new Exponential(0.1));
-		SeverityLevel.L2.setDistribution(new Exponential(0.2));
-		SeverityLevel.L3.setDistribution(new Exponential(0.3));
-		SeverityLevel.L4.setDistribution(new Exponential(0.4));
-		SeverityLevel.L5.setDistribution(new Exponential(0.5));
+		SeverityLevel.L1.setDistribution(new Exponential(0.05));
+		SeverityLevel.L2.setDistribution(new Exponential(0.01));
+		SeverityLevel.L3.setDistribution(new Exponential(0.01));
+		SeverityLevel.L4.setDistribution(new Exponential(0.01));
+		SeverityLevel.L5.setDistribution(new Exponential(0.01));
 				
-		System.out.println(system);
-		System.out.println(system.getPatientCreator());
-		System.out.println(system.getPhysicianList());
-		System.out.println(system.getNurseList());
+		/**
+		 * System.out.println(system);
+		 */
+
+		
 	
-		
-		
-		
-		
-		
-		
 		/**
 		 * 
 		 * EventQueue enabledEventTest = new EventQueue();
@@ -135,42 +130,24 @@ public class PrgmTest {
 		
 		EnabledEvent enabledEvent0= system.getEnabledEventList();
 		System.out.println("DEBUT DU TEST");
-		System.out.println(enabledEvent0.getAbledList());
-		System.out.println(enabledEvent0.getDisabledList());
-	
-		
 		EnabledEvent enabledEvent1=EnabledEvent.update(system);
-		
-		System.out.println(enabledEvent1.getAbledList());
-		System.out.println(enabledEvent1.getDisabledList());
-		
-		
-		
 		System.out.println("L'eventqueue est vide au départ : "+system.getEventqueue().getNextEvents());
 		
 		
 		EventQueue newEventQueue0 = EventQueue.updateEventQueue(enabledEvent1, enabledEvent0, system);
 		System.out.println(newEventQueue0);
-				
-		System.out.println(system.getEnabledEventList().getAbledList());
-			
+							
 		System.out.println("\n TEST DU CORPS DU MAIN \n");
 		
-		for(int i = 0; i <11; i++) {
-		System.out.println("Etat de la EventQueue au début du tour "+i+" : ");
-		System.out.println(system.getEventqueue());
-		System.out.println("Etat de la EnabledEvent au début du tour "+i+" : ");
-		System.out.println(system.getEnabledEventList().getAbledList());
-		System.out.println(system.getEnabledEventList().getDisabledList());
-
-		System.out.println("L'évenement suivant va être executé : "+system.getEventqueue().getNextEvents().get(0));
+		for(int i = 0; i <15; i++) {
+		System.out.println("L'etat du Systeme au début du tour "+i+"\n");
+		System.out.println(system);
 		system.getEventqueue().getNextEvents().get(0).execute(system);
-		system.getEventqueue().getNextEvents().remove(0);
-		System.out.println("Le temps du systeme après execution est le suivant : "+system.getSimTime());
+		System.out.println("\n Le temps du systeme après execution est le suivant : "+system.getSimTime());
 		
 		system.getEnabledEventList().getAbledList().remove(system.getEventqueue().getNextEvents().get(0).getType());
-		
 		system.getEnabledEventList().getDisabledList().add(system.getEventqueue().getNextEvents().get(0).getType());
+		system.getEventqueue().getNextEvents().remove(0);
 		
 		EnabledEvent oldEnabledEvent= system.getEnabledEventList();
 		System.out.println("Liste des événements anciennement disponibles : "+oldEnabledEvent.getAbledList());
@@ -178,9 +155,7 @@ public class PrgmTest {
 		EnabledEvent.update(system);
 		EnabledEvent newEnabledEvent=system.getEnabledEventList();
 		System.out.println("Liste des événements nouvellement disponibles : "+newEnabledEvent.getAbledList());
-		
-		System.out.println(system.getEventqueue());
-		
+				
 		EventQueue newEventQueue = EventQueue.updateEventQueue(newEnabledEvent,oldEnabledEvent,system);
 		system.setEventqueue(newEventQueue);
 		

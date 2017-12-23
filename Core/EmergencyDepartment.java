@@ -145,7 +145,6 @@ public class EmergencyDepartment {
 	public void setPhysicianNb(int nb){
 		for (int i = 0; i < nb; i++) {
 			Physician p = new Physician("Physician", "Generic");
-			System.out.println(p);
 			PhysicianList.add(p);
 		}
 		physicianNb = nb;
@@ -392,13 +391,13 @@ public class EmergencyDepartment {
 		
 		result+="[Etat des Patients et des Queues : \n"
 		+"PATIENTS : Nb = "+this.PatientList.size()+",Liste des Etats de chaque Patient : "+patientStateList+ "\n"
-		+"REGISTRATION QUEUE : "+this.getRegistration().getWaitingQueue()+ "\n"
-		+"INSTALLATION QUEUE : "+this.getInstallation().getWaitingQueue()+ "\n"
-		+"CONSULTATION QUEUE : "+this.getConsultation().getWaitingQueue()+ "\n"
-		+"TRANSPORTATION QUEUE : "+this.getTransportation().getWaitingQueue()+ "\n"
-		+"BLOOD-TEST QUEUE : "+this.getBlood().getWaitingQueue()+ "\n"
-		+"XRAY QUEUE : "+this.getXray().getWaitingQueue()+ "\n"
-		+"MRI QUEUE : "+this.getMri().getWaitingQueue()+ " ]\n"
+		+"REGISTRATION QUEUE : Nb =  "+this.getRegistration().getWaitingQueue().size()+", "+this.getRegistration().getWaitingQueue()+ "\n"
+		+"INSTALLATION QUEUE : Nb = "+this.getInstallation().getWaitingQueue().size()+", "+this.getInstallation().getWaitingQueue()+ "\n"
+		+"CONSULTATION QUEUE : Nb = "+this.getConsultation().getWaitingQueue().size()+", "+this.getConsultation().getWaitingQueue()+ "\n"
+		+"TRANSPORTATION QUEUE : Nb = "+this.getTransportation().getWaitingQueue().size()+", "+this.getTransportation().getWaitingQueue()+ "\n"
+		+"BLOOD-TEST QUEUE : Nb = "+this.getBlood().getWaitingQueue().size()+", "+this.getBlood().getWaitingQueue()+ "\n"
+		+"XRAY QUEUE : Nb = "+this.getXray().getWaitingQueue().size()+", "+this.getXray().getWaitingQueue()+ "\n"
+		+"MRI QUEUE : Nb = "+this.getMri().getWaitingQueue().size()+", "+this.getMri().getWaitingQueue()+ " ]\n"
 		;
 		
 		result+="[Etat des EnabledEvent au temps : "+this.getSimTime()+ " : "
