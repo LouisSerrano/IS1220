@@ -1,11 +1,12 @@
 package Core;
 import java.util.ArrayList;
 
-import Event.*;
+import event.*;
 
 public class EmergencyDepartment {
 	private String name;
 	private int simTime;
+	private PatientCreator patientCreator;
 	private ArrayList<Patient> PatientList;
 	private ArrayList<Physician> PhysicianList;
 	private ArrayList<Nurse> NurseList;
@@ -24,6 +25,7 @@ public class EmergencyDepartment {
 	public EmergencyDepartment(){
 		this.name="ED";
 		this.simTime=0;
+		this.patientCreator=new PatientCreator();
 		this.PatientList=new ArrayList<Patient>();
 		this.TransporterList=new ArrayList<Transporter>();
 		this.PhysicianList= new ArrayList<Physician>();
@@ -44,10 +46,14 @@ public class EmergencyDepartment {
 	 * @param mriRoomNb
 	 * @param xRayRoomNb
 	 */
-	private EmergencyDepartment(int transporterNb, int nurseNb, int physicianNb, int boxRoomNb, 
+	
+	
+	
+	EmergencyDepartment(int transporterNb, int nurseNb, int physicianNb, int boxRoomNb, 
 								int shockRoomNb, int labRoomNb, int mriRoomNb, int xRayRoomNb){
 		this.name="ED";
 		this.simTime=0;
+		this.patientCreator=new PatientCreator();
 		this.PatientList=new ArrayList<Patient>();
 		this.TransporterList=new ArrayList<Transporter>();
 		this.NurseList= new ArrayList<Nurse>();
@@ -55,6 +61,15 @@ public class EmergencyDepartment {
 		this.RoomList=new ArrayList<Room>();
 		this.EnabledEvent= new EnabledEvent();
 		this.eventqueue=new EventQueue();
+		
+		this.transporterNb=transporterNb;
+		this.nurseNb=nurseNb;
+		this.physicianNb=physicianNb;
+		this.boxRoomNb=boxRoomNb;
+		this.shockRoomNb=shockRoomNb;
+		this.labRoomNb=labRoomNb;
+		this.mriRoomNb=mriRoomNb;
+		this.xRayRoomNb=xRayRoomNb;
 		
 		for (int i = 1; i < transporterNb; i++) {
 			Transporter t = new Transporter("", "");
@@ -111,35 +126,71 @@ public class EmergencyDepartment {
 	//#### CHARACTERITIC NUMBERS SETTERS ####
 	
 	public void setTransporterNb(int nb){
+		for (int i = 0; i < nb; i++) {
+			Transporter t = new Transporter("Transporter", "Generic");
+			TransporterList.add(t);
+		}
 		transporterNb = nb;
+
 	}
 	
 	public void setNurseNb(int nb){
 		nurseNb = nb;
+		for (int i = 0; i < nb; i++) {
+			Nurse n = new Nurse("Nurse", "Generic");
+			NurseList.add(n);
+		}
 	}
 	
 	public void setPhysicianNb(int nb){
+		for (int i = 0; i < nb; i++) {
+			Physician p = new Physician("Physician", "Generic");
+			System.out.println(p);
+			PhysicianList.add(p);
+		}
 		physicianNb = nb;
+
 	}
 	
 	public void setBoxRoomNb(int nb){
 		boxRoomNb = nb;
+		for (int i = 0; i < nb; i++) {
+			BoxRoom r = new BoxRoom("Generic");
+			RoomList.add(r);
+		}
 	}
 	
 	public void setShockRoomNb(int nb){
 		shockRoomNb = nb;
+		for (int i = 0; i < nb; i++) {
+			ShockRoom r = new ShockRoom("Generic");
+			RoomList.add(r);
+		}
 	}
 	
 	public void setLabRoomNb(int nb){
 		labRoomNb = nb;
+		for (int i = 0; i < labRoomNb; i++) {
+			LaboratoryRoom r = new LaboratoryRoom("Generic");
+			RoomList.add(r);
+		}
 	}
 	
 	public void setMriRoomNb(int nb){
 		mriRoomNb = nb;
+		for (int i = 0; i < mriRoomNb; i++) {
+			MriRoom r = new MriRoom("Genreric");
+			RoomList.add(r);
+		}
+		
 	}
 	
 	public void setXrayRoomNb(int nb){
 		xRayRoomNb = nb;
+		for (int i = 0; i < xRayRoomNb; i++) {
+			RadiographyRoom r = new RadiographyRoom("Generic");
+			RoomList.add(r);
+		}
 	}
 	
 	/**
@@ -169,7 +220,7 @@ public class EmergencyDepartment {
 			if(physician.getHumanResourceState().equals(HumanResourceState.IDLE)){
 				result = physician;
 				break;
-			}		
+			}	
 		}
 		return result;
 		
@@ -183,41 +234,42 @@ public class EmergencyDepartment {
 		case "LABORATORY_ROOM":
 		for(Room room : this.RoomList){
 			if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
-				result = (LaboratoryRoom) room;
+				result = room;
 				break;
 			}
 		}
 		case "MRI_ROOM":
 			for(Room room : this.RoomList){
 				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
-					result = (MriRoom) room;
+					result = room;
 					break;
 				}
 			}
 		case "RADIOGRAPHY_ROOM":
 			for(Room room : this.RoomList){
 				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
-					result = (RadiographyRoom) room;
+					result = room;
 					break;
 					}	
 				}
 		case "BOX_ROOM":
 			for(Room room : this.RoomList){
 				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
-					result = (BoxRoom) room;
+					result =room;
 					break;
 					}
 			}
+		
 		case "SHOCK_ROOM":
 			for(Room room : this.RoomList){
 				if(room.getRoomState().equals(RoomState.AVAILABLE) && room.getType().equals(type)){
-					result = (ShockRoom) room;
+					result =room;
 					break;
 					}
 			}
 		
 		}
-		return result;		
+		return result;	
 	}
 	
 	
@@ -297,10 +349,69 @@ public class EmergencyDepartment {
 	
 	
 	public String toString() {
-		return "EMERGENCY DPT : [TRANSPORTERS :" + transporterNb + ", NURSES :" + nurseNb + ", PHYSICIANS :"
-				+ physicianNb + ", BOX ROOMS :" + boxRoomNb + ", SHOCK ROOMS :" + shockRoomNb + 
-				", LABORATORY ROOMS :" + labRoomNb + ", MRI ROOMS :" + mriRoomNb + ", RADIOGRAPHY ROOMS :"
-				+ xRayRoomNb + "]";
+		String result= "";
+		ArrayList<HumanResourceState> physicianStateList= new ArrayList<HumanResourceState>();
+		ArrayList<HumanResourceState> nurseStateList= new ArrayList<HumanResourceState>();
+		ArrayList<HumanResourceState> transporterStateList= new ArrayList<HumanResourceState>();
+		ArrayList<PatientState> patientStateList= new ArrayList<PatientState>();
+		
+		int p = PhysicianList.size();
+		int n = NurseList.size();
+		int t = TransporterList.size();
+		int pa = PatientList.size();
+		for(int i = 0; i <p ; i ++ ) {
+			Physician physician= PhysicianList.get(i);
+			physicianStateList.add(physician.getHumanResourceState());
+		}
+		for(int i = 0; i <n ; i ++ ) {
+			Nurse nurse = NurseList.get(i);
+			nurseStateList.add(nurse.getHumanResourceState());
+		}
+		for(int i = 0; i<t ; i ++ ) {
+			Transporter transporter = TransporterList.get(i);
+			transporterStateList.add(transporter.getHumanResourceState());
+		}
+		if (pa>0) {
+			for(int i = 0; i <pa ; i ++ ) {
+				Patient patient = PatientList.get(i);
+			patientStateList.add(patient.getPatientState());
+		}
+		}
+		
+		result +="\n EMERGENCY DPT : \n"
+		+ "Etat des Human Ressources : \n"
+		+ "[TRANSPORTERS : Nb= " + transporterNb + ", "+  transporterStateList + "\n ";
+		result +="NURSES : Nb = " + nurseNb + ", " +nurseStateList+ "\n ";
+		result +="PHYSICIANS : Nb = "+ physicianNb+ ", " +physicianStateList + "\n ";
+		result +="BOX ROOMS : Nb = " + boxRoomNb 
+		+", SHOCK ROOMS : Nb = " + shockRoomNb
+		+", LABORATORY ROOMS : Nb = " + labRoomNb
+		+ ", MRI ROOMS : Nb = " + mriRoomNb +  "\n "
+		+ ", RADIOGRAPHY ROOMS : Nb = " + xRayRoomNb + "\n "
+		+this.RoomList +" ] \n \n";
+		
+		result+="[Etat des Patients et des Queues : \n"
+		+"PATIENTS : Nb = "+this.PatientList.size()+",Liste des Etats de chaque Patient : "+patientStateList+ "\n"
+		+"REGISTRATION QUEUE : "+this.getRegistration().getWaitingQueue()+ "\n"
+		+"INSTALLATION QUEUE : "+this.getInstallation().getWaitingQueue()+ "\n"
+		+"CONSULTATION QUEUE : "+this.getConsultation().getWaitingQueue()+ "\n"
+		+"TRANSPORTATION QUEUE : "+this.getTransportation().getWaitingQueue()+ "\n"
+		+"BLOOD-TEST QUEUE : "+this.getBlood().getWaitingQueue()+ "\n"
+		+"XRAY QUEUE : "+this.getXray().getWaitingQueue()+ "\n"
+		+"MRI QUEUE : "+this.getMri().getWaitingQueue()+ " ]\n"
+		;
+		
+		result+="[Etat des EnabledEvent au temps : "+this.getSimTime()+ " : "
+				+this.getEnabledEventList().getAbledList()+  " ] \n"
+				+"[Etat de la EventQueue au temps : " +this.getSimTime()+ " : "
+				+this.getEventqueue().getNextEvents()+" ] \n";
+		if(this.getEventqueue().getNextEvents().size()>0) {
+				result +="[Le premier événement de la Queue est : "+this.getEventqueue().getNextEvents().get(0)+"] \n"
+				;
+		}
+		
+		
+		return result;
 	}
 
 	public Registration getRegistration() {
@@ -357,5 +468,13 @@ public class EmergencyDepartment {
 
 	public void setInstallation(Installation installation) {
 		this.installation = installation;
+	}
+
+	public PatientCreator getPatientCreator() {
+		return patientCreator;
+	}
+
+	public void setPatientCreator(PatientCreator patientCreator) {
+		this.patientCreator = patientCreator;
 	}
 }
