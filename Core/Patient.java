@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import core.distribution.ConsultationReqProbability;
-import core.healthservice.HealthService;
-import core.room.Room;
-import event.Event;
+import event.*;
+import core.room.*;
+import core.healthService.*;
 
 public class Patient {
 	
@@ -28,6 +28,7 @@ public class Patient {
 	private Event currentEvent;
 	private int arrivalTime;
 	private double totalCharges;
+	private KPI kpi;
 	
 	public Patient(String name, String surname, SeverityLevel severity, int arrivalTime){
 		Patient.patientCounter++;
@@ -38,8 +39,9 @@ public class Patient {
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = PatientState.WAITING_REGISTRATION;
-		this.decisionFunction=new ConsultationReqProbability();
+		this.setDecisionFunction(new ConsultationReqProbability());
 		this.history = new HashMap<Event, Integer>();
+		this.kpi = new KPI(this);
 	}
 	
 	public Patient(SeverityLevel severity, int arrivalTime){
@@ -49,8 +51,7 @@ public class Patient {
 		this.arrivalTime = arrivalTime;
 		this.totalCharges = 0;
 		this.state = PatientState.WAITING_REGISTRATION;
-		this.decisionFunction=new ConsultationReqProbability();
-
+		this.setDecisionFunction(new ConsultationReqProbability());
 	}	
 	
 	
@@ -99,7 +100,7 @@ public class Patient {
 	}
 
 	public String toString() {
-		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname +", arrival Time :"+arrivalTime+", Severity Level : "
+		return "Patient : [id : " + id + ", name : " + name + ", surname : " + surname + ", Severity Level : "
 				 + severity + ", Insurance : " + insurance + ", STATE : " + state + ", LOCATION : " + 
 				room + ", TOTAL CHARGES : " + totalCharges + "]";
 	}
@@ -139,18 +140,33 @@ public class Patient {
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
+	
 	public Map<Event, Integer> getHistory() {
 		return history;
 	}
+	
 	public void setHistory(Map<Event, Integer> history) {
 		this.history = history;
 	}
-
+	
 	public ConsultationReqProbability getDecisionFunction() {
 		return decisionFunction;
 	}
 
 	public void setDecisionFunction(ConsultationReqProbability decisionFunction) {
 		this.decisionFunction = decisionFunction;
+	}
+	
+	public Event searchEvent(EventType eT) {
+		for (Event event : this.history.keySet()){
+			if (event.getName() == eT.getName()) {
+				return event;
+			}
+		}
+		return null;
+	}
+	
+	public KPI getKPI() {
+		return this.kpi;
 	}
 }
