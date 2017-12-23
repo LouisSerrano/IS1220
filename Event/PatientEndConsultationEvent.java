@@ -29,36 +29,37 @@ public class PatientEndConsultationEvent extends Event {
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
 		this.room.setRoomState(RoomState.AVAILABLE);
+		
 		patient.setRoom(null);
 		String decision = this.decision;
 		
 		switch(decision){
 		case "NO_TEST_REQUIRED":
 			patient.setPatientState(PatientState.WAITING_RELEASE);
+			system.getEventqueue().getNextEvents().add(new PatientDepartureEvent(system.getSimTime(),this.patient));
 			break;
 			
 		case "X_RAY":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);	
 			patient.setDirection(decision);
 			this.patient.getDecisionFunction().setXrayTaken(true);
+			system.getTransportation().addPatientToQueue(patient);
 			break;
 			
 		case "BLOOD_TEST":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
 			patient.setDirection(decision);
 			this.patient.getDecisionFunction().setBloodTestTaken(true);
-			
-
+			system.getTransportation().addPatientToQueue(patient);
 			break;
+			
 		case "MRI":
 			patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
 			patient.setDirection(decision);
 			this.patient.getDecisionFunction().setMriTaken(true);
-
-
+			system.getTransportation().addPatientToQueue(patient);
 			break;
 		}
-		system.getConsultation().getWaitingQueue().remove(this.patient);
 		physician.setHumanResourceState(HumanResourceState.IDLE);
 		this.toString();
 		

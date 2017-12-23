@@ -17,6 +17,7 @@ public class PatientStartMriEvent extends PatientStartExaminationEvent {
 		}
 	@Override
 	public void execute(EmergencyDepartment system){
+		
 		Room room = super.getRoom();
 		Patient patient = super.getPatient();
 		

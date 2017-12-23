@@ -4,6 +4,7 @@ package event;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import Core.EmergencyDepartment;
 import Core.Patient;
@@ -30,7 +31,15 @@ public class EventQueue {
 	}
 	
 	
-	
+	/**
+	 * Il faut toujours donner la priorité aux événements qui ont lieu après dans la chaine:
+	 * Registration sur Arrival,
+	 * Installation sur Registration et EndTransport,
+	 * Consultation sur EndInstallation,
+	 * Transportation sur EndConsultation,
+	 * Examination sur EndTransportation
+	 * Start Transportation sur EndExamination
+	 */
 	public void sort(){
 		int n=this.nextEvents.size();
 		for(int j=1; j< n;j++){
@@ -42,6 +51,44 @@ public class EventQueue {
 				i=i-1;
 			}
 			nextEvents.set(i+1, e);
+		}
+		int i = 0;
+		while(i< n && this.nextEvents.get(0).getTimeStamp()==this.nextEvents.get(i).getTimeStamp()){
+			i+=1;
+		}
+		for(int j = 1; j<i; j++) {
+			if((this.nextEvents.get(0).getType().equals(EventType.ARR1)
+				||this.nextEvents.get(0).getType().equals(EventType.ARR2)
+				||this.nextEvents.get(0).getType().equals(EventType.ARR3)
+				||this.nextEvents.get(0).getType().equals(EventType.ARR4)
+				||this.nextEvents.get(0).getType().equals(EventType.ARR5))
+				&&this.nextEvents.get(j).getType().equals(EventType.REGIST)) {
+				Collections.swap(this.nextEvents, 0, j);
+			}
+			if(this.nextEvents.get(0).getType().equals(EventType.REGIST)&&(this.nextEvents.get(j).getType().equals(EventType.START_INSTAL)
+					||this.nextEvents.get(j).getType().equals(EventType.END_TRANSPORT))){
+				Collections.swap(this.nextEvents, 0, j);
+			}
+			if(this.nextEvents.get(0).getType().equals(EventType.END_INSTAL)&&(this.nextEvents.get(j).getType().equals(EventType.START_VISIT))){
+				Collections.swap(this.nextEvents, 0, j);
+			}
+			if(this.nextEvents.get(0).getType().equals(EventType.END_VISIT)&&(this.nextEvents.get(j).getType().equals(EventType.START_TRANSPORT))){
+				Collections.swap(this.nextEvents, 0, j);
+			}
+			if((this.nextEvents.get(0).getType().equals(EventType.START_MRI)
+					||this.nextEvents.get(0).getType().equals(EventType.START_XRAY)
+					||this.nextEvents.get(0).getType().equals(EventType.START_BLOOD)
+					&&this.nextEvents.get(j).getType().equals(EventType.END_TRANSPORT))) {
+					Collections.swap(this.nextEvents, 0, j);
+				}
+			if((this.nextEvents.get(0).getType().equals(EventType.END_TRANSPORT)&&(
+					this.nextEvents.get(j).getType().equals(EventType.START_MRI)
+					||this.nextEvents.get(j).getType().equals(EventType.START_XRAY)
+					||this.nextEvents.get(j).getType().equals(EventType.START_BLOOD)))){
+					Collections.swap(this.nextEvents, 0, j);
+				}
+			
+			
 		}
 		
 	}
@@ -145,7 +192,6 @@ public class EventQueue {
 		if (eT.equals(EventType.START_BLOOD)){
 			system.getEventqueue().getNextEvents().add(new PatientStartBloodEvent(
 					system.getSimTime(), system.getBlood().getWaitingQueue().get(0), system.getFreeRoom("LABORATORY_ROOM")));
-			
 			}
 	}
 		

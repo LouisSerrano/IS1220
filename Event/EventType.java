@@ -59,6 +59,7 @@ public enum EventType {
 		boolean availableBloodRoom= false;
 		boolean availablePhysician=false;
 		boolean availableTransporter=false;
+		boolean leavingPatient= false;
 		
 		if(this.name=="PatientArrival1") {
 			
@@ -301,6 +302,16 @@ public enum EventType {
 			}
 			this.available= waitingPatient;	
 			}
+		
+		if (this.name.equals("PatientDeparture")) {
+			for (Patient patient : system.getPatientList()) {
+				if(patient.getPatientState().equals(PatientState.WAITING_RELEASE)) {
+					leavingPatient =true;
+					break;
+				}
+			}
+			this.available=leavingPatient;
+		}
 		
 		
 		    }

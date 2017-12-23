@@ -8,8 +8,8 @@ import Core.PatientState;
 public class PatientArrivalEvent extends Event {
 	Patient patient;
 	
-	public PatientArrivalEvent(EventType type,int timeStamp,Patient patient){
-		super("Arrival of " + patient.getName(),type,patient.getArrivalTime());
+	public PatientArrivalEvent(EventType type,int timeStamp, Patient patient){
+		super("Arrival of " + patient.getName(),type,timeStamp);
 		this.patient=patient;
 		}
 

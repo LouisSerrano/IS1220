@@ -27,7 +27,6 @@ public class PatientStartInstallationEvent extends Event {
 	@Override
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
-
 		patient.setPatientState(PatientState.BEING_INSTALLED);
 		patient.setRoom(room);
 		room.setRoomState(RoomState.USED);
@@ -40,7 +39,7 @@ public class PatientStartInstallationEvent extends Event {
 	}
 	
 	public String toString() {
-		return ("Nurse "+this.nurse.getName()+" starts installation of the Patient " + this.patient.getName() +  "at the time " + super.getTimeStamp()+"in the Room "+this.room.getName());
+		return ("Nurse "+this.nurse.getName()+" starts installation of the Patient " + this.patient.getName() +  " at the time " + super.getTimeStamp()+" in the Room "+this.room.getName());
 	}
 	
 	

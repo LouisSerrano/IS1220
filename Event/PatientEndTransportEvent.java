@@ -44,8 +44,8 @@ public class PatientEndTransportEvent extends Event{
 			break;
 			
 		case"CONSULTATION":
-			patient.setPatientState(PatientState.WAITING_CONSULTATION);
-			system.getConsultation().addPatientToQueue(patient);
+			patient.setPatientState(PatientState.WAITING_INSTALLATION);
+			system.getInstallation().addPatientToQueue(patient);
 			patient.setDirection(null);
 			break;
 		}

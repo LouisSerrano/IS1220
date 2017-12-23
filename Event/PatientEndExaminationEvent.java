@@ -23,9 +23,9 @@ public abstract class PatientEndExaminationEvent extends Event {
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
 
-	
 	this.room.setRoomState(RoomState.AVAILABLE);
 	this.patient.setPatientState(PatientState.WAITING_TRANSPORTATION);
+	system.getTransportation().addPatientToQueue(patient);
 	this.patient.setDirection("CONSULTATION");
 
 	

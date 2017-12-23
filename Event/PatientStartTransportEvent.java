@@ -24,7 +24,7 @@ public class PatientStartTransportEvent extends Event {
 	@Override
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
-
+		system.getTransportation().getWaitingQueue().remove(patient);
 		transporter.setHumanResourceState(HumanResourceState.VISITING);
 		patient.setPatientState(PatientState.BEING_TRANSPORTED);
 		int t = new Dirac(5).generateSample();
