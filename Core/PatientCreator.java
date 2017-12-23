@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PatientCreator {
-	public static HashMap<SeverityLevel,Patient> lastPatient;
+	public static HashMap<SeverityLevel,Integer> nextPatient;
 	
 	/**
 	 * Instantiates and initialises a new Hashmap for PatientList. Calls 5 patients with a
@@ -16,24 +16,35 @@ public class PatientCreator {
 	
 	
 	public PatientCreator(){
-		lastPatient= new HashMap<SeverityLevel,Patient>();
+		nextPatient= new HashMap<SeverityLevel,Integer>();
 		
 		for( SeverityLevel lvl : SeverityLevel.values() ){
-			int time = lvl.getDistribution().generateSample();
-			Patient patient= new Patient (lvl, time);
-			lastPatient.put(lvl,patient);
+			nextPatient.put(lvl,0);
 		}
 		
 	}
 	
-	public static Patient newPatient(SeverityLevel level){
-		int lastTime = lastPatient.get(level).getArrivalTime();
+	public Patient newPatient(SeverityLevel level){
+		int lastTime = nextPatient.get(level);
 		int time= level.getDistribution().generateSample();
 		Patient patient =new Patient(level, lastTime+time);
-		lastPatient.put(level,patient);
+		nextPatient.put(level,time+lastTime);
 		
 		return patient;
 	}
+	
+	public String toString() {
+		return "The Next Patient of each Severity Level : \n" 
+				+"Severity Level 1: "+nextPatient.get(SeverityLevel.L1) + "\n"
+				+"Severity Level 2: "+nextPatient.get(SeverityLevel.L2)+ "\n"
+				+"Severity Level 3: "+nextPatient.get(SeverityLevel.L3)+ "\n"
+				+"Severity Level 4: "+nextPatient.get(SeverityLevel.L4)+ "\n"
+				+"Severity Level 5: "+nextPatient.get(SeverityLevel.L5)+ "\n";
+
+
+	}
+
+	
 	
 	
 	
