@@ -31,7 +31,7 @@ public class PatientEndTransportEvent extends Event{
 			patient.setDirection(null);
 			break;
 			
-		case "BLOOD":
+		case "BLOOD_TEST":
 			patient.setPatientState(PatientState.WAITING_BLOOD);
 			system.getBlood().addPatientToQueue(patient);
 			patient.setDirection(null);
