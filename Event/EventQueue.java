@@ -6,13 +6,13 @@ package event;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Core.EmergencyDepartment;
-import Core.Patient;
-import Core.PatientCreator;
-import Core.SeverityLevel;
-import Core.Room;
-import Core.Nurse;
-import Core.Physician;
+import core.EmergencyDepartment;
+import core.Nurse;
+import core.Patient;
+import core.PatientCreator;
+import core.Physician;
+import core.SeverityLevel;
+import core.room.Room;
 
 
 public class EventQueue {
@@ -52,10 +52,12 @@ public class EventQueue {
 			}
 			nextEvents.set(i+1, e);
 		}
+		
 		int i = 0;
 		while(i< n && this.nextEvents.get(0).getTimeStamp()==this.nextEvents.get(i).getTimeStamp()){
 			i+=1;
 		}
+		if (i >0) {
 		for(int j = 1; j<i; j++) {
 			if((this.nextEvents.get(0).getType().equals(EventType.ARR1)
 				||this.nextEvents.get(0).getType().equals(EventType.ARR2)
@@ -88,7 +90,7 @@ public class EventQueue {
 					Collections.swap(this.nextEvents, 0, j);
 				}
 			
-			
+		}
 		}
 		
 	}
@@ -149,7 +151,7 @@ public class EventQueue {
 		}
 		
 		if (eT.equals(EventType.START_INSTAL)){
-			Patient patient = system.getInstallation().getWaitingQueue().get(0);
+			Patient patient = system.firstPatientToInstall();
 			SeverityLevel level= patient.getSeverityLevel();
 			
 			if(level.equals(SeverityLevel.L1) || level.equals(SeverityLevel.L2)){
@@ -175,8 +177,6 @@ public class EventQueue {
 					system.getSimTime(), system.getTransportation().getWaitingQueue().get(0), system.getFreeTransporter()));
 			
 		}
-		 
-	
 		
 		
 		if (eT.equals(EventType.START_XRAY)){
@@ -266,9 +266,9 @@ public class EventQueue {
 				EventQueue.addInstanceOfEventType(eT, system);	
 			}
 			
+			
 			system.getEventqueue().sort();
 			EnabledEvent.update2(system);
-
 			return system.getEventqueue();
 			
 		}

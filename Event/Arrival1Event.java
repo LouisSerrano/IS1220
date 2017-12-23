@@ -1,10 +1,7 @@
 package event;
 
-import Core.EmergencyDepartment;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import Core.Patient;
-
-import Core.EmergencyDepartment;
-import Core.Patient;
+import core.EmergencyDepartment;
+import core.Patient;
 
 public class Arrival1Event extends PatientArrivalEvent {
 	

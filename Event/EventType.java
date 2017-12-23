@@ -1,15 +1,15 @@
 package event;
 
-import Core.EmergencyDepartment;
-import Core.HumanResourceState;
-import Core.Nurse;
-import Core.Patient;
-import Core.PatientState;
-import Core.Physician;
-import Core.Room;
-import Core.RoomState;
-import Core.SeverityLevel;
-import Core.Transporter;
+import core.EmergencyDepartment;
+import core.HumanResourceState;
+import core.Nurse;
+import core.Patient;
+import core.PatientState;
+import core.Physician;
+import core.SeverityLevel;
+import core.Transporter;
+import core.room.Room;
+import core.room.RoomState;
 
 public enum EventType {
 	ARR1("PatientArrival1"),

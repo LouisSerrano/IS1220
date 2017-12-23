@@ -1,15 +1,14 @@
 package event;
 
-import Core.Distribution.ConsultationReqProbability;
-
-import Core.EmergencyDepartment;
-import Core.HealthService;
-import Core.HumanResourceState;
-import Core.Patient;
-import Core.PatientState;
-import Core.Physician;
-import Core.Room;
-import Core.RoomState;
+import core.EmergencyDepartment;
+import core.HumanResourceState;
+import core.Patient;
+import core.PatientState;
+import core.Physician;
+import core.distribution.ConsultationReqProbability;
+import core.healthservice.HealthService;
+import core.room.Room;
+import core.room.RoomState;
 
 public class PatientEndConsultationEvent extends Event {
 	

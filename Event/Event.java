@@ -1,6 +1,6 @@
 package event;
 
-import Core.EmergencyDepartment;
+import core.EmergencyDepartment;
 
 public abstract class Event{
 	private String name;

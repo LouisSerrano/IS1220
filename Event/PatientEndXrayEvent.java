@@ -1,8 +1,8 @@
 package event;
 
-import Core.EmergencyDepartment;
-import Core.Patient;
-import Core.Room;
+import core.EmergencyDepartment;
+import core.Patient;
+import core.room.Room;
 
 public class PatientEndXrayEvent extends PatientEndExaminationEvent {
 	

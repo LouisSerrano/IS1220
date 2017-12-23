@@ -1,13 +1,13 @@
 package event;
 
-import Core.Blood;
-import Core.EmergencyDepartment;
-import Core.MRI;
-import Core.Patient;
-import Core.PatientState;
-import Core.Room;
-import Core.RoomState;
-import Core.Xray;
+import core.EmergencyDepartment;
+import core.Patient;
+import core.PatientState;
+import core.healthservice.Blood;
+import core.healthservice.MRI;
+import core.healthservice.Xray;
+import core.room.Room;
+import core.room.RoomState;
 
 public abstract class PatientEndExaminationEvent extends Event {
 	

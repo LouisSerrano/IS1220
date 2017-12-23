@@ -1,15 +1,15 @@
 package event;
 
-import Core.Distribution.ConsultationReqProbability;
-import Core.Distribution.Dirac;
-import Core.Distribution.Uniform;
-import Core.EmergencyDepartment;
-import Core.HealthService;
-import Core.HumanResourceState;
-import Core.Patient;
-import Core.PatientState;
-import Core.Room;
-import Core.Transporter;
+import core.EmergencyDepartment;
+import core.HumanResourceState;
+import core.Patient;
+import core.PatientState;
+import core.Transporter;
+import core.distribution.ConsultationReqProbability;
+import core.distribution.Dirac;
+import core.distribution.Uniform;
+import core.healthservice.HealthService;
+import core.room.Room;
 
 public class PatientStartTransportEvent extends Event {
 	

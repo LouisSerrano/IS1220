@@ -1,13 +1,12 @@
 package event;
 
-import Core.Distribution.Uniform;
-
-import Core.EmergencyDepartment;
-import Core.LaboratoryRoom;
-import Core.Patient;
-import Core.PatientState;
-import Core.Room;
-import Core.RoomState;
+import core.EmergencyDepartment;
+import core.Patient;
+import core.PatientState;
+import core.distribution.LaboratoryRoom;
+import core.distribution.Uniform;
+import core.room.Room;
+import core.room.RoomState;
 
 public class PatientStartBloodEvent extends PatientStartExaminationEvent{
 	

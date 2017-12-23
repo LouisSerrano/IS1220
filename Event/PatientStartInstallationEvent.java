@@ -1,15 +1,14 @@
 package event;
 
-import Core.Distribution.Dirac;
-
-import Core.Distribution.Uniform;
-import Core.EmergencyDepartment;
-import Core.HumanResourceState;
-import Core.Nurse;
-import Core.Patient;
-import Core.PatientState;
-import Core.Room;
-import Core.RoomState;
+import core.EmergencyDepartment;
+import core.HumanResourceState;
+import core.Nurse;
+import core.Patient;
+import core.PatientState;
+import core.distribution.Dirac;
+import core.distribution.Uniform;
+import core.room.Room;
+import core.room.RoomState;
 
 public class PatientStartInstallationEvent extends Event {
 	private Patient patient;
@@ -39,7 +38,7 @@ public class PatientStartInstallationEvent extends Event {
 	}
 	
 	public String toString() {
-		return ("Nurse "+this.nurse.getName()+" starts installation of the Patient " + this.patient.getName() +  " at the time " + super.getTimeStamp()+" in the Room "+this.room.getName());
+		return ("Nurse "+this.nurse.getName()+" starts installation of the Patient " + this.patient.getName() +  " at the time " + super.getTimeStamp());
 	}
 	
 	

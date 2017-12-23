@@ -1,7 +1,8 @@
 package event;
 
 import java.util.ArrayList;
-import Core.EmergencyDepartment;
+
+import core.EmergencyDepartment;
 
 public class EnabledEvent {
 	private ArrayList<EventType> abledList;
@@ -79,19 +80,16 @@ public class EnabledEvent {
 	}
 	
 	public static void update2(EmergencyDepartment system) {
-		ArrayList<EventType> abledList=new ArrayList<EventType>();
-		ArrayList<EventType> disabledList= new ArrayList<EventType>();
-		for( EventType eT : EventType.values()) {
+		EnabledEvent newly = new EnabledEvent();
+		for(EventType eT : system.getEnabledEventList().getAbledList()) {
 			eT.updateAvailability(system);
 			if(eT.isAvailable()) {
-				abledList.add(eT);
-			}
-			else {
-				disabledList.add(eT);
+				newly.getAbledList().add(eT);
+				newly.getDisabledList().remove(eT);
 			}
 		}
-		system.getEnabledEventList().setAbledList(abledList);
-		system.getEnabledEventList().setDisabledList(disabledList);
+		system.getEnabledEventList().setAbledList(newly.abledList);
+		system.getEnabledEventList().setDisabledList(newly.disabledList);
 
 	}
 	

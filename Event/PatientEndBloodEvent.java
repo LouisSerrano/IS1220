@@ -1,10 +1,10 @@
 package event;
 
-import Core.EmergencyDepartment;
-import Core.Patient;
-import Core.PatientState;
-import Core.Room;
-import Core.RoomState;
+import core.EmergencyDepartment;
+import core.Patient;
+import core.PatientState;
+import core.room.Room;
+import core.room.RoomState;
 
 public class PatientEndBloodEvent extends PatientEndExaminationEvent {
 	
