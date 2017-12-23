@@ -1,10 +1,16 @@
-package Core;
+package core;
 
 import java.util.ArrayList;
 
-import Core.distribution.Dirac;
-import Core.distribution.Exponential;
-import Core.distribution.Uniform;
+import core.distribution.Dirac;
+import core.distribution.Exponential;
+import core.distribution.Uniform;
+import core.healthservice.Blood;
+import core.healthservice.Consultation;
+import core.healthservice.Installation;
+import core.healthservice.MRI;
+import core.healthservice.Transportation;
+import core.healthservice.Xray;
 import event.Arrival1Event;
 import event.Arrival2Event;
 import event.Arrival3Event;
@@ -80,21 +86,15 @@ public class PrgmTest {
 		/**
 		 * 
 		 * EventQueue enabledEventTest = new EventQueue();
-
-
 		ArrayList<Event> nextEvents = enabledEventTest.getNextEvents();
 		System.out.println(nextEvents);
-
-
 		
-
 		
 		  Patient patient = system.getPatientCreator().newPatient(SeverityLevel.L1);
 		   Patient patient2 = system.getPatientCreator().newPatient(SeverityLevel.L2);
 		  Patient patient3 = system.getPatientCreator().newPatient(SeverityLevel.L3);
 		  Patient patient4 = system.getPatientCreator().newPatient(SeverityLevel.L4);
 		 
-
 		
 		 Arrival1Event arr1 = new Arrival1Event(patient);
 		 Arrival2Event arr2 = new Arrival2Event(patient2);
@@ -106,15 +106,11 @@ public class PrgmTest {
 		 System.out.println(arr2.getType());
 		 System.out.println(arr3.getType());
 		 System.out.println(arr4.getType());
-
-
-
 		  
 		 
 		
 		
 		System.out.println(system.getEventqueue().getNextEvents());
-
 		System.out.println(system.getEventqueue().getNextEvents().get(4).getType());
 		System.out.println(EventType.ARR1.equals(EventType.ARR1));
 		System.out.println(system.getEventqueue().getNextEvents().size());
@@ -230,3 +226,4 @@ public class PrgmTest {
 		 
 	}
 }
+	

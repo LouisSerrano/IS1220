@@ -13,15 +13,16 @@ public enum PatientState {
 	BEING_CONSULTED("BEING_CONSULTED"),
 	BEING_TRANSPORTED("BEING_TRANSPORTED"),
 	BEING_EXAMINATED("BEING_EXAMINATED"),
+	WAITING_RELEASE("WAITING_RELEASE"),
 	RELEASED("RELEASED");
 	
-	private String state;
+	private String name;
 	
-	PatientState(String state){
-		this.state = state;
+	PatientState(String name){
+		this.name = name;
 	}
 	
-	public String getPatientState() {
-		return this.state;
+	public String getName() {
+		return this.name;
 	}
 }
