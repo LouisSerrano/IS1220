@@ -1,4 +1,5 @@
 package core;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import core.distribution.LaboratoryRoom;
@@ -16,6 +17,17 @@ import core.room.Room;
 import core.room.RoomState;
 import core.room.ShockRoom;
 import event.*;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.json.JSONException;
 
 public class EmergencyDepartment {
 	private String name;
@@ -214,6 +226,31 @@ public class EmergencyDepartment {
 		return INSTANCE;
 	}
 	
+	public void addFromFile(String fileName) throws IOException, JSONException {
+		FileLoader fileLoader = new FileLoader(this, fileName);
+		for (Patient patient : fileLoader.getCreatedPatients()) {
+			PatientList.add(patient);
+		}
+		for (Nurse nurse : fileLoader.getCreatedNurses()) {
+			NurseList.add(nurse);
+		}
+		
+		for (Transporter transporter : fileLoader.getCreatedTransporters()) {
+			TransporterList.add(transporter);
+		}
+		for (Physician physician : fileLoader.getCreatedPhysicians()) {
+			PhysicianList.add(physician);
+		}
+
+		for (Room room : fileLoader.getCreatedRoom()) {
+			RoomList.add(room);
+		}
+
+	}
+
+	
+	
+	
 	
 	public Nurse getFreeNurse(){
 		Nurse result = null;
@@ -313,6 +350,42 @@ public class EmergencyDepartment {
 			return patientList.get(0);
 		}
 		
+	}
+	
+	public void execute(){
+		ArrayList<Event> nextEvents = this.getEventqueue().getNextEvents();
+		boolean wellInitialized = true;
+		
+		if(this.PhysicianList.size()==0 || this.TransporterList.size()==0 || this.NurseList.size()==0 || this.RoomList.size()==0) {
+			wellInitialized = false;
+		}
+		
+		
+		if(wellInitialized == false) {
+			System.out.println("System badly Initialized");
+			
+		}
+		
+		else {
+			
+		
+		if(nextEvents.isEmpty()) {
+			EnabledEvent enabledEvent0 = this.getEnabledEventList();
+			EnabledEvent enabledEvent1 = EnabledEvent.update(this);
+			EventQueue.updateEventQueue(enabledEvent1, enabledEvent0, this);
+			System.out.println("The Queue of Event is empty, the system generated automatically patient");
+		}
+		else {
+			Event e = nextEvents.get(0);
+			this.getEnabledEventList().getAbledList().remove(e.getType());
+			this.getEnabledEventList().getDisabledList().add(e.getType());
+			this.getEventqueue().getNextEvents().remove(0);
+			EnabledEvent enabledEvent0= this.getEnabledEventList();
+			EnabledEvent enabledEvent1 = EnabledEvent.update(this);
+			EventQueue.updateEventQueue(enabledEvent1, enabledEvent0, this);
+			System.out.println("The event "+e.getName()+"has been executed");
+		}
+		}
 		
 	}
 	
@@ -386,6 +459,11 @@ public class EmergencyDepartment {
 		ArrayList<HumanResourceState> nurseStateList= new ArrayList<HumanResourceState>();
 		ArrayList<HumanResourceState> transporterStateList= new ArrayList<HumanResourceState>();
 		ArrayList<PatientState> patientStateList= new ArrayList<PatientState>();
+		ArrayList<RoomState> boxRoomStateList= new ArrayList<RoomState>();
+		ArrayList<RoomState> shockRoomStateList= new ArrayList<RoomState>();
+		ArrayList<RoomState> bloodRoomStateList= new ArrayList<RoomState>();
+		ArrayList<RoomState> mriRoomStateList= new ArrayList<RoomState>();
+		ArrayList<RoomState> xrayRoomStateList= new ArrayList<RoomState>();
 		
 		int p = PhysicianList.size();
 		int n = NurseList.size();
@@ -409,18 +487,38 @@ public class EmergencyDepartment {
 			patientStateList.add(patient.getPatientState());
 		}
 		}
+		for(Room room : this.RoomList) {
+			String type = room.getType();
+			
+			
+			if(type.equals("SHOCK_ROOM")){
+				shockRoomStateList.add(room.getRoomState());
+			}
+			if(type.equals("BOX_ROOM")){
+				boxRoomStateList.add(room.getRoomState());
+			}
+			if(type.equals("LABORATORY_ROOM")){
+				bloodRoomStateList.add(room.getRoomState());
+			}
+			if(type.equals("RADIOGRAPHY_ROOM")){
+				xrayRoomStateList.add(room.getRoomState());
+			}
+			if (type.equals("MRI_ROOM")) {
+				mriRoomStateList.add(room.getRoomState());
+			}
+		}
 		
 		result +="\n EMERGENCY DPT : \n"
 		+ "Etat des Human Ressources : \n"
 		+ "[TRANSPORTERS : Nb= " + transporterNb + ", "+  transporterStateList + "\n ";
 		result +="NURSES : Nb = " + nurseNb + ", " +nurseStateList+ "\n ";
 		result +="PHYSICIANS : Nb = "+ physicianNb+ ", " +physicianStateList + "\n ";
-		result +="BOX ROOMS : Nb = " + boxRoomNb 
-		+", SHOCK ROOMS : Nb = " + shockRoomNb
-		+", LABORATORY ROOMS : Nb = " + labRoomNb
-		+ ", MRI ROOMS : Nb = " + mriRoomNb +  "\n "
-		+ ", RADIOGRAPHY ROOMS : Nb = " + xRayRoomNb + "\n "
-		+this.RoomList +" ] \n \n";
+		result +="BOX ROOMS : Nb = " + boxRoomNb + ", " +boxRoomStateList+ "\n "
+		+", SHOCK ROOMS : Nb = " + shockRoomNb+ ", " +shockRoomStateList+ "\n "
+		+", LABORATORY ROOMS : Nb = " + labRoomNb+ ", " +bloodRoomStateList+ "\n "
+		+ ", MRI ROOMS : Nb = " + mriRoomNb + ", " +mriRoomStateList+ "\n "
+		+ ", RADIOGRAPHY ROOMS : Nb = " + xRayRoomNb + ", " +xrayRoomStateList+ "\n "
+		+" ] \n \n";
 		
 		result+="[Etat des Patients et des Queues : \n"
 		+"PATIENTS : Nb = "+this.PatientList.size()+",Liste des Etats de chaque Patient : "+patientStateList+ "\n"
