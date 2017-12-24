@@ -19,6 +19,9 @@ public class PatientEndTransportEvent extends Event{
 	@Override
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
+		patient.updateHistory(this, getTimeStamp());
+		patient.updateCharges(system.getTransportation());
+
 		this.toString();
 
 

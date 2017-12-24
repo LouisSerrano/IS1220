@@ -11,6 +11,7 @@ public class Arrival1Event extends PatientArrivalEvent {
 	
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
+		super.getPatient().updateHistory(this, patient.getArrivalTime());
 		this.toString();
 	}
 	

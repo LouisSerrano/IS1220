@@ -1,6 +1,7 @@
 package event;
 
 import core.EmergencyDepartment;
+import core.Patient;
 
 public abstract class Event{
 	private String name;

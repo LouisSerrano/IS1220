@@ -24,6 +24,7 @@ public class PatientStartBloodEvent extends PatientStartExaminationEvent{
 		patient.setDirection(null);
 		int t = system.getBlood().getDistribution().generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndBloodEvent(system.getSimTime()+t,patient,room));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 	}
 	

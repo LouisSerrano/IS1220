@@ -28,7 +28,9 @@ public class PatientEndConsultationEvent extends Event {
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
 		this.room.setRoomState(RoomState.AVAILABLE);
-		
+		patient.updateCharges(system.getConsultation());
+		patient.updateHistory(this, getTimeStamp());
+
 		patient.setRoom(null);
 		String decision = this.decision;
 		

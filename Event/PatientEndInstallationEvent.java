@@ -26,6 +26,8 @@ public class PatientEndInstallationEvent extends Event {
 		patient.setPatientState(PatientState.WAITING_CONSULTATION);
 		system.getConsultation().addPatientToQueue(this.patient);
 		nurse.setHumanResourceState(HumanResourceState.IDLE);
+		patient.updateHistory(this, getTimeStamp());
+		this.toString();
 		
 		
 	}

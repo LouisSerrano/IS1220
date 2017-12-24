@@ -28,6 +28,7 @@ public class PatientStartConsultationEvent extends Event{
 		physician.setHumanResourceState(HumanResourceState.VISITING);
 		int t = system.getConsultation().getDistribution().generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndConsultationEvent(system.getSimTime()+t,patient,physician, room));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 	}
 	

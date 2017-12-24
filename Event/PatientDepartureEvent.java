@@ -17,6 +17,8 @@ public class PatientDepartureEvent extends Event {
 		super.execute(system);
 		patient.setPatientState(PatientState.RELEASED);
 		system.getPatientList().remove(patient);
+		patient.updateHistory(this, getTimeStamp());
+
 		this.toString();
 	}
 	

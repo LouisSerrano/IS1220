@@ -26,6 +26,7 @@ public abstract class PatientStartExaminationEvent extends Event {
 		super.execute(system);
 		this.room.setRoomState(RoomState.USED);
 		this.patient.setPatientState(PatientState.BEING_EXAMINATED);
+		patient.updateHistory(this, getTimeStamp());
 		
 switch(patient.getDirection()){
 		

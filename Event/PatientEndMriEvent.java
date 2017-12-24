@@ -14,7 +14,10 @@ public class PatientEndMriEvent extends PatientEndExaminationEvent {
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
 		this.toString();
-	}
+		getPatient().updateHistory(this, getTimeStamp());
+		getPatient().updateCharges(system.getMri());
+
+		}
 	public String toString() {
 	return "End Mri of the Patient " + super.getPatient().getName() +  "at the time " + this.getTimeStamp()+"in the Room"+super.getRoom().getName();
 	}

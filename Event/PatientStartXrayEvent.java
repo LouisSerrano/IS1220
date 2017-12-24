@@ -25,6 +25,7 @@ public class PatientStartXrayEvent extends PatientStartExaminationEvent {
 		
 		int t = new Uniform(10,20).generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndXrayEvent(system.getSimTime()+t,patient, room));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 	}
 	public String toString() {
@@ -32,5 +33,6 @@ public class PatientStartXrayEvent extends PatientStartExaminationEvent {
 	return "Start Xray of the Patient " + super.getPatient().getName() +  "at the time " + this.getTimeStamp()+"in the Room"+super.getRoom().getName();
 	}
 }
+
 
 

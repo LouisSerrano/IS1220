@@ -8,6 +8,14 @@ import core.PatientState;
 public class PatientArrivalEvent extends Event {
 	Patient patient;
 	
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
 	public PatientArrivalEvent(EventType type,int timeStamp, Patient patient){
 		super("Arrival of " + patient.getName(),type,timeStamp);
 		this.patient=patient;
@@ -26,6 +34,7 @@ public class PatientArrivalEvent extends Event {
 	public String toString() {
 		return "Patient " + patient.getName() + " arrived at " + patient.getArrivalTime() +" with the Severitylevel "+this.patient.getSeverityLevel().getLevel();
 	}
+	
 }
 
 	

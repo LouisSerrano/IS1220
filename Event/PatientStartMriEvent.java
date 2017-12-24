@@ -26,6 +26,7 @@ public class PatientStartMriEvent extends PatientStartExaminationEvent {
 		patient.setDirection(null);
 		int t = new Uniform(30,70).generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndMriEvent(system.getSimTime()+t,patient, room));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();	
 	}
 	

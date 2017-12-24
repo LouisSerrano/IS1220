@@ -28,6 +28,7 @@ public class PatientRegistrationEvent extends Event {
 		patient.setPatientState(PatientState.WAITING_INSTALLATION);
 		system.getRegistration().getWaitingQueue().remove(this.patient);
 		system.getInstallation().addPatientToQueue(this.patient);
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 	}
 	

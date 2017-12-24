@@ -3,6 +3,7 @@ package event;
 import core.EmergencyDepartment;
 import core.Patient;
 import core.PatientState;
+import core.Physician;
 import core.room.Room;
 import core.room.RoomState;
 
@@ -14,7 +15,10 @@ public class PatientEndBloodEvent extends PatientEndExaminationEvent {
 		}
 	
 	public void execute(EmergencyDepartment system){
-		super.execute(system);	
+		super.execute(system);
+		getPatient().updateHistory(this, getTimeStamp());
+		getPatient().updateCharges(system.getBlood());
+
 		this.toString();
 	}
 	public String toString() {
@@ -22,4 +26,3 @@ public class PatientEndBloodEvent extends PatientEndExaminationEvent {
 
 	}
 }
-

@@ -33,6 +33,7 @@ public class PatientStartInstallationEvent extends Event {
 		nurse.setHumanResourceState(HumanResourceState.VISITING);
 		int t = new Dirac(2).generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndInstallationEvent(system.getSimTime()+t,patient,nurse, room));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 		
 	}

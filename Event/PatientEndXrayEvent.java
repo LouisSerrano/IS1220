@@ -13,6 +13,8 @@ public class PatientEndXrayEvent extends PatientEndExaminationEvent {
 	
 	public void execute(EmergencyDepartment system){
 		super.execute(system);
+		getPatient().updateHistory(this, getTimeStamp());
+		getPatient().updateCharges(system.getXray());
 		this.toString();
 	}
 	

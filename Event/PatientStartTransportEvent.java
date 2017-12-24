@@ -29,6 +29,7 @@ public class PatientStartTransportEvent extends Event {
 		patient.setPatientState(PatientState.BEING_TRANSPORTED);
 		int t = new Dirac(5).generateSample();
 		system.getEventqueue().getNextEvents().add(new PatientEndTransportEvent(system.getSimTime()+t,patient,transporter));
+		patient.updateHistory(this, getTimeStamp());
 		this.toString();
 
 	}
